@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="腹有诗书气自华">
 <meta property="og:description" content="参考资料：阮一峰：ES6 入门 Promise Promise 是异步编程的一种解决方案。简单来说，Promise相当于一个容器，里面保存着某种未来才会结束的事件，通常是一个异步操作。它的优点是把执行代码和处理结果的代码清晰的分离了。  三个状态：pending，resolve，reject  promise有三个常用的方法分别是then、catch、finally；then方法传入resolve">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T03:35:03.314Z">
+<meta property="og:updated_time" content="2018-04-11T01:23:44.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6 面试知识点总结">
 <meta name="twitter:description" content="参考资料：阮一峰：ES6 入门 Promise Promise 是异步编程的一种解决方案。简单来说，Promise相当于一个容器，里面保存着某种未来才会结束的事件，通常是一个异步操作。它的优点是把执行代码和处理结果的代码清晰的分离了。  三个状态：pending，resolve，reject  promise有三个常用的方法分别是then、catch、finally；then方法传入resolve">
@@ -330,6 +330,10 @@
 </li>
 <li><p>可以链式调用</p>
 </li>
+<li><p>Promise 新建后立即执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise'</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'resolved.'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Hi!'</span>);</span><br><span class="line"><span class="comment">//输出顺序如下：</span></span><br><span class="line"><span class="comment">// Promise</span></span><br><span class="line"><span class="comment">// Hi!</span></span><br><span class="line"><span class="comment">// resolved</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//promise 新建后立即执行，先输出promise，然后resolve将promise对象状态改变为”成功“ ，在异步操作成功时调用，并将异步操作的结果作为参数传递进去，执行resolve之前会把当前所有同步任务都执行完毕，即会先输出Hi！</span></span><br><span class="line"><span class="comment">// 但是状态一旦改变后面出现不同的状态就不变了</span></span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
 <li><p>Promise.all() 用于将多个Promise实例包装成一个新的Promise实例，以数组’[ ]’形式转入，只有当p1,p2,p3都执行成功，p的状态才会成功，有一个被reject，p的状态也会被reject</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="built_in">Promise</span>.all([p1,p2,p3]);<span class="comment">//p1,p2,p3 都是Promise的实例，如果不是就会先调用Promise.resolve()将其转换成promise对象</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -489,6 +493,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/css-实现垂直居中.html" rel="prev" title="css 实现垂直居中">
+                css 实现垂直居中 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -568,7 +576,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
