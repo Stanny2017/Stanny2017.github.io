@@ -252,6 +252,709 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/HTTP-缓存机制.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/HTTP-缓存机制.html" itemprop="url">HTTP 缓存机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T11:57:13+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="彻底弄懂-HTTP-缓存机制"><a href="#彻底弄懂-HTTP-缓存机制" class="headerlink" title="彻底弄懂 HTTP 缓存机制"></a>彻底弄懂 HTTP 缓存机制</h1><p><a href="https://www.cnblogs.com/chenqf/p/6386163.html" target="_blank" rel="noopener">参考链接</a></p>
+<p><a href="https://segmentfault.com/a/1190000008956069" target="_blank" rel="noopener">参考2</a></p>
+<p>缓存在前端面试中经常被问到，必须彻底弄懂机制。</p>
+<h2 id="Http-缓存分为两类"><a href="#Http-缓存分为两类" class="headerlink" title="Http 缓存分为两类"></a>Http 缓存分为两类</h2><ol>
+<li><p>强缓存</p>
+</li>
+<li><p>协商缓存</p>
+</li>
+</ol>
+<h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><p>第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。</p>
+<ol>
+<li><code>Expires</code> 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，http1.1的版本使用<code>Cache-Control</code>替代。</li>
+<li><code>Cache-Control</code> 相对时间，max-age=xxx（单位： 秒）；在指定时间内，直接使用缓存资源。</li>
+</ol>
+<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><p>需要和服务器进行协商对比判断是否可以使用缓存。<br>第一次请求数据时，服务器会将缓存标识和数据一起返回，客户端将两者进行缓存备份。再次请求时，客户端将缓存标识一并发送，服务端根据缓存标识判断客户端是否可以直接使用缓存，判断成功，返回304状态码。</p>
+<ol>
+<li><code>Last-Modified</code>  （服务器返回首部字段）浏览器首次请求，服务器在响应请求时，告诉浏览器资源最后被修改的时间</li>
+<li><code>Last-Modified-Since</code> （客户端发送的首部字段）浏览器再次请求， 该字段保存的就是首次请求服务器返回的 <code>Last-Modified</code> 值，服务器拿到该值后进行对比，若值未变则返回304状态码，若该值小于服务器端的值，说明资源已被更新，服务器返回新的资源，返回成功状态码200OK；</li>
+<li><code>Etag</code> 第一次请求时，服务器返回的资源唯一标识。</li>
+<li><code>If-None-Match</code>  再次请求服务器，客户端将缓存的资源唯一标识以这个首部字段进行发送，客户端拿到这个值进行对比，若一样，则返回304，通知浏览器可以直接使用浏览器的缓存；若不一样，说明资源有改动，服务器响应新的资源。</li>
+</ol>
+<h4 id="浏览器首次请求"><a href="#浏览器首次请求" class="headerlink" title="浏览器首次请求"></a>浏览器首次请求</h4><p><img src="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png" alt="image"></p>
+<h4 id="浏览器再次请求"><a href="#浏览器再次请求" class="headerlink" title="浏览器再次请求"></a>浏览器再次请求</h4><p><img src="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210141453338-1263276228.png" alt="image"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>第一次请求缓存资源后（也有可能不缓存 如果第一次请求服务器返回的 <code>Cache-Control</code> 值为<code>no-store</code> 则所有的资源都不会被缓存），浏览器再次请求时，先判断缓存资源是否过期，如果没有过期则直接取得缓存资源，不用再请求服务器。</li>
+<li>若过期，则进行协商缓存（缓存资源若没有被修改则仍然有效），服务器根据客户端请求发送的资源唯一标识符（<code>Last-Modified-Since</code>和<code>If-None-Match</code>）和服务器端的值（<code>Last-Modified</code>和<code>Etag</code>）进行对比，对比成功则返回304，告知服务器端可以直接使用浏览器端缓存资源。</li>
+</ol>
+<h2 id="附：HTTP状态码"><a href="#附：HTTP状态码" class="headerlink" title="附：HTTP状态码"></a>附：HTTP状态码</h2><p>1XX：服务器收到请求，请求i进行中</p>
+<p>2XX：请求成功，200 OK</p>
+<p>3XX：重定向，需要进一步的操作以完成请求。301 永久重定向；302 临时重定向；304 not modified</p>
+<p>4XX：客户端错误，401 Unauthorized（未授权）403 Forbidden（禁止访问） 404 not found（资源未找到）</p>
+<p>5XX：服务器错误，500 Internal Server Error（服务器内部错误，无法完成请求）； 502 Bad Gateway（网关错误）；  503 Service Unavailable（服务器临时宕机）；505 HTTP Version not supported（服务器不支持请求的 http 版本）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/js实现斐波那契取第n个值方法优化.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/js实现斐波那契取第n个值方法优化.html" itemprop="url">js实现斐波那契取第n个值方法优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T11:10:35+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.cnblogs.com/youweik/p/6285430.html" target="_blank" rel="noopener">参考链接</a></p>
+<p>四种优化方案：（算法效率逐渐递增）</p>
+<ol>
+<li>建立缓存</li>
+<li>直接数组存储</li>
+<li>定义两个变量循环存储前两个值</li>
+<li>应用数学公式</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 斐波那契,求f(n)的值</span></span><br><span class="line"><span class="comment"> * 原始方案直接递归调用，重复计算太多，浪费资源。算法效率低</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span> || n == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">arguments</span>.callee(n - <span class="number">1</span>) + <span class="built_in">arguments</span>.callee(n - <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  优化1：定义闭包，加缓存存储已经计算过的资源</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> getN = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cache = &#123;</span><br><span class="line">    <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="number">1</span>: <span class="number">1</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 之所以要定义闭包是为了封装cache 不让外部可以改变它</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (cache[n]) &#123;</span><br><span class="line">      <span class="keyword">return</span> cache[n];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//把之前计算过的资源全部存下来，后面就可以直接用</span></span><br><span class="line">      cache[n - <span class="number">2</span>] = <span class="built_in">arguments</span>.callee(n - <span class="number">2</span>);</span><br><span class="line">      cache[n - <span class="number">1</span>] = <span class="built_in">arguments</span>.callee(n - <span class="number">1</span>);</span><br><span class="line">      cache[n] = cache[n - <span class="number">1</span>] + cache[n - <span class="number">2</span>];</span><br><span class="line">      <span class="keyword">return</span> cache[n];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  优化2: 定义数组循环存储之前的值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getN1</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> arr = [];</span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (i &lt;= n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">0</span> || i == <span class="number">1</span>) &#123;</span><br><span class="line">      arr.push(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      arr.push(arr[i - <span class="number">1</span>] + arr[i - <span class="number">2</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    i++;</span><br><span class="line">    <span class="comment">// console.log(arr);</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// console.log(getN(7));</span></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 实现方案3:定义两个变量</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getN2</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> pre = <span class="number">1</span>,</span><br><span class="line">      cur = <span class="number">1</span>,</span><br><span class="line">      result;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span> || n == <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= n) &#123;</span><br><span class="line">      result = pre + cur;</span><br><span class="line">      pre = cur;</span><br><span class="line">      cur = result;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.time(<span class="string">'getN2(1200)'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(getN2(<span class="number">1200</span>))</span><br><span class="line">  <span class="built_in">console</span>.timeEnd(<span class="string">'getN2(1200)'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 实现方案四：用数学公式：效率最高，数学真美</span></span><br><span class="line"><span class="comment">   * 代码略</span></span><br><span class="line"><span class="comment">   */</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/腾讯面试总结.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/腾讯面试总结.html" itemprop="url">腾讯面试总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T17:16:01+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="2018-04-15-腾讯"><a href="#2018-04-15-腾讯" class="headerlink" title="2018-04-15 腾讯"></a>2018-04-15 腾讯</h1><ol>
+<li>HTML表单控件类型</li>
+<li>项目架构图绘制</li>
+<li>第一个项目的难点</li>
+<li>为什么选择Oracle</li>
+<li>多用户同时想访问同一数据库表，如何做容灾，回答多种方案</li>
+<li>Tomcat 用作 webserver 的原理（如何实现），其他还有哪些webserver以及如何实现</li>
+<li>java 中的 GC</li>
+<li>本科/研究生学过的课程</li>
+</ol>
+<h3 id="答案整理"><a href="#答案整理" class="headerlink" title="答案整理"></a>答案整理</h3><ol>
+<li><p>HTML表单用于收集不同类型的用户输入。包含不同类型的 <code>input</code> 元素、复选框、单选按钮、提交按钮等等。 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"raido"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--H5 增加了多个新的输入类型</span></span><br><span class="line"><span class="comment">&lt;input&gt; 标签的 name 属性用于对提交到服务器后的表单数据进行标识，或者在客户端通过 js 引用表单数据。</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">min</span>=<span class="string">"1"</span> <span class="attr">max</span>=<span class="string">"5"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"date"</span> <span class="attr">max</span>=<span class="string">"2018-04-15"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"color"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"10"</span>&gt;</span>  显示为滑块控件</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"month"</span>&gt;</span> 允许用户选择月份和年份</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"week"</span>&gt;</span> 允许用户选择周和年</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"time"</span>&gt;</span> 允许用户选择时间</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"tel"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"url"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--下拉列表框--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"volvo"</span>&gt;</span>Volvo<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"saab"</span>&gt;</span>Saab<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"opel"</span>&gt;</span>Opel<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"audi"</span>&gt;</span>Audi<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">rows</span>=<span class="string">"3"</span> <span class="attr">cols</span>=<span class="string">"30"</span>&gt;</span></span><br><span class="line">这里是文本域中的文本 ... ... ... ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span>标签<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--组合表单中的相关元素--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">legend</span>&gt;</span>为 fieldset 元素定义标题<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">    身高：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></span><br><span class="line">    体重：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>架构图包含硬件采集、软件数据采集、数据存储、数据分析、可视化呈现的四个步骤</p>
+</li>
+<li><p>第一个项目的难点：（后两点可以用作问题来说）</p>
+<ul>
+<li>地图离线化实现</li>
+<li>地图坐标转换</li>
+<li>小区自动登陆</li>
+<li>面对千万条的数据查询，查询速度很慢，用户体验很不好；解决方案：hbase 做了二级索引，不需要做全表扫描，优化后查询一天时间的数据返回在10s以内，之前需要十几分钟左右</li>
+<li>查询不出结果，只显示结果条数（结果集合和结果条数在后台是分离返回的）。后台给前端返回数据的时候需要根据表的外键从不同的数据库表里取数据，现场维护人员误删了数据，导致查找外键没找到，返回null指针错误。所有返回了空的数据集合。</li>
+</ul>
+</li>
+<li><p>为什么采用oralce？ 安全性能高，稳定性强，使用方便，易于维护；甲方需求</p>
+</li>
+<li><p>多用户同时想访问同一数据库表，如何做容灾</p>
+<ul>
+<li><p>加锁，乐观锁，悲观锁？</p>
+</li>
+<li><p>//TODO</p>
+</li>
+<li><p>//TODO</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p>webserver 应用最广泛的是 Apache 其他还有Nginx、tomcat<br>Webserver 的工作流程  <a href="https://blog.csdn.net/imjtrszy/article/details/53576374" target="_blank" rel="noopener">参考1</a> <a href="https://blog.csdn.net/martinwangjun/article/details/77659336" target="_blank" rel="noopener">参考2</a><br><img src="https://img-blog.csdn.net/20161211224045888?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaW1qdHJzenk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"><br>Nodejs 实现简单http服务器的代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="comment">// 导入http模块:</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"> <span class="comment">// 创建http server，并传入回调函数:</span></span><br><span class="line"> <span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">     <span class="comment">// 回调函数接收request和response对象,</span></span><br><span class="line">     <span class="comment">// 获得HTTP请求的method和url:</span></span><br><span class="line">     <span class="built_in">console</span>.log(request.method + <span class="string">': '</span> + request.url);</span><br><span class="line">     <span class="comment">// 将HTTP响应200写入response, 同时设置Content-Type: text/html:</span></span><br><span class="line">     response.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;);</span><br><span class="line">     <span class="comment">// 将HTTP响应的HTML内容写入response:</span></span><br><span class="line">     response.end(<span class="string">'&lt;h1&gt;Hello world!&lt;/h1&gt;'</span>);</span><br><span class="line"> &#125;);</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 让服务器监听8080端口:</span></span><br><span class="line"> server.listen(<span class="number">8080</span>);</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">'Server is running at http://127.0.0.1:8080/'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>java中的 GC （Garbage Collecation），垃圾回收；这是 java 与 C/C++ 的主要区别之一，在java开发时一般不需要专门编写内存回收和垃圾清理代码；jvm中存在垃圾自动回收机制；</p>
+</li>
+<li>js 具有自动垃圾回收机制，原理：垃圾收集器会定期找出那些不再使用的变量，然后释放其内存。两种实现方式。存在的问题：进行GC时，会停止响应其他操作。对于游戏、动画等应用会造成不好用户体验。<ul>
+<li>标记清除：对不再使用的变量打上标记（进入环境，离开环境），便于垃圾收集齐下次回收</li>
+<li>引用计数：跟踪每个值被引用的次数，当引用次数为0时，进行垃圾回收，释放内存。</li>
+</ul>
+</li>
+<li>本科学过的课程：客户关系管理；网络营销；运筹学；管理学；经济学；电子商务</li>
+<li>研究生课程：数据库；算法设计；web工程与技术；数理逻辑；软件工程方法论</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/前端面试题差缺补漏.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/前端面试题差缺补漏.html" itemprop="url">前端面试题差缺补漏</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T10:51:18+08:00">
+                2018-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="canvas-和-SVG"><a href="#canvas-和-SVG" class="headerlink" title="canvas 和 SVG"></a>canvas 和 SVG</h2><ol>
+<li>canvas：画布，H5新增的api，一般用于绘制比较复杂的动画或者游戏制作、绘制图表。</li>
+<li>SVG：可缩放矢量图形。放大不会失真，很适合用来做地图。</li>
+<li>两者主要区别是<ul>
+<li>canvas绘制的图形没有event事件，不能被js引擎抓取，例如想给canvas图形添加一个点击事件做不到</li>
+<li>svg图形支持事件绑定</li>
+<li>canvas绘制图形通过js实现，svg更多通过标签来实现。</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/重大漏洞.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/重大漏洞.html" itemprop="url">重大漏洞</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T23:56:07+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>此处之前一直有误解，在此记录提醒自己</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = []</span><br><span class="line"><span class="keyword">var</span> count = arr.push(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>)</span><br><span class="line"><span class="built_in">console</span>.log(count)<span class="comment">//4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = [].push(...)<span class="comment">// 返回的是push后的数组的长度 不是push 后的数组！！！</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/前端模块化.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1060,872 +1763,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/前端js面试技巧慕课笔记.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Stanny">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/my-avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="腹有诗书气自华">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/前端js面试技巧慕课笔记.html" itemprop="url"> 前端js面试技巧慕课笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T23:34:45+08:00">
-                2018-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://blog.csdn.net/water_v/article/details/78261364?locationNum=2&amp;fps=1" target="_blank" rel="noopener">网友笔记供参考</a></p>
-<blockquote>
-<p>课程讲解思路：先列题目引发思考，再详细讲解知识点，最后解答</p>
-</blockquote>
-<p>[TOC]</p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="关于面试"><a href="#关于面试" class="headerlink" title="关于面试"></a>关于面试</h2><blockquote>
-<p>前端水平的三个层次</p>
-</blockquote>
-<ul>
-<li>基层工程师-基础知识</li>
-<li>高级工程师-项目经验</li>
-<li>架构师- 解决方案</li>
-</ul>
-<h2 id="几个面试题"><a href="#几个面试题" class="headerlink" title="几个面试题"></a>几个面试题</h2><blockquote>
-<p>题目很多，做具有代表的题目，举一反三</p>
-</blockquote>
-<ol>
-<li>js 中使用 typeof 能得到哪些类型 （==js 变量类型==）</li>
-<li>何时使用 === 何时使用 == ？  （==强制类型转换==）</li>
-<li>window.onload 和 DOMContentLoaded 的区别  （==浏览器渲染过程==）</li>
-<li>用 js 连续创建 10 个 <a> 标签，点击的时候弹出来对应的序号 (==作用域==)</a></li>
-<li>简述如何实现一个模块加载器，实现类似 require.js 的基本功能  （==js 模块化==）</li>
-<li>实现数组的随机排序  （==JS 基础算法==）</li>
-</ol>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul>
-<li>拿到面试题第一时间看到的是什么 （==考点==）</li>
-<li>如何看待永远做不完的题海 （==以不变应万变==）</li>
-<li>如何对待接下来遇到的面试题？  （==总结考点并扩展再反思题目==）</li>
-</ul>
-<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="js-基础三座大山"><a href="#js-基础三座大山" class="headerlink" title="js 基础三座大山"></a>js 基础三座大山</h2><ul>
-<li>原型 原型链</li>
-<li>作用域 闭包</li>
-<li>异步 单线程</li>
-</ul>
-<h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><h4 id="1-js-中使用-typeof-能得到哪些类型"><a href="#1-js-中使用-typeof-能得到哪些类型" class="headerlink" title="1. js 中使用 typeof 能得到哪些类型"></a>1. js 中使用 typeof 能得到哪些类型</h4><h4 id="2-何时使用-何时使用"><a href="#2-何时使用-何时使用" class="headerlink" title="2. 何时使用 === 何时使用 =="></a>2. 何时使用 === 何时使用 ==</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (obj.a == <span class="literal">null</span>)&#123;</span><br><span class="line">    <span class="comment">// 这里相当于 obj.a === null || obj.a ===undefined ，因为 undefined == null 值为true</span></span><br><span class="line">    <span class="comment">// 这是 JQuery 中推荐的写法， 其余情况全部用 === （避免代码风险有代码洁癖）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="3-JS-中有哪些内置函数"><a href="#3-JS-中有哪些内置函数" class="headerlink" title="3. JS 中有哪些内置函数"></a>3. JS 中有哪些内置函数</h4><h4 id="4-JS-变量按照存储方式区分为哪些类型，并描述其特点"><a href="#4-JS-变量按照存储方式区分为哪些类型，并描述其特点" class="headerlink" title="4. JS 变量按照存储方式区分为哪些类型，并描述其特点"></a>4. JS 变量按照存储方式区分为哪些类型，并描述其特点</h4><h4 id="5-如何理解-JSON"><a href="#5-如何理解-JSON" class="headerlink" title="5. 如何理解 JSON"></a>5. 如何理解 JSON</h4><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ol>
-<li>变量类型：值类型 和 引用类型（指针）</li>
-</ol>
-<ul>
-<li>引用类型包括： 数组 函数 对象;引用类型公共空间，是指针</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> b=a;</span><br><span class="line">a=<span class="number">200</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">//100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a=&#123;<span class="attr">age</span>:<span class="number">20</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b=a;</span><br><span class="line">b.age=<span class="number">21</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.age) <span class="comment">//21</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>typeof只能区分值类型的详细类型，对引用类型无能为力，但可以区分出函数来</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span>;<span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">'abc'</span>;<span class="comment">//string</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">123</span>;<span class="comment">//number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span>;<span class="comment">//boolean</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125;;<span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> [];<span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>;<span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">console</span>.log<span class="comment">//function</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>强制类型转换(值类型的计算)</p>
-<ul>
-<li>①字符串拼接</li>
-<li>②==运算符</li>
-<li>③if语句</li>
-<li>④逻辑运算 （布尔操作符 逻辑非、逻辑与、逻辑或） <ul>
-<li>逻辑非 ！ (结果总是 true/fasle )<ul>
-<li>如果操作数是一个对象，返回 false</li>
-</ul>
-</li>
-<li>逻辑与 &amp;&amp;  <ul>
-<li>==<strong>如果第一个操作是对象则返回第二个操作数</strong>==</li>
-<li>如果第二个操作数是对象，则只有在第一个操作数的求值结果为 true 的情况下才会返回该对象</li>
-<li>如果两个操作数都是对象，则返回第二个操作数</li>
-<li>如果第一个操作数是 null，则返回 null</li>
-<li>如果第一个操作数是 NaN，则返回 NaN</li>
-<li>如果第一个操作数是 undefined ，则返回 undefined。</li>
-<li>逻辑与操作符属于断路操作，如果第一个操作符能够决定结果，那么就不会再对第二个操作数求值。</li>
-</ul>
-</li>
-<li><strong>==逻辑或 ||==</strong><ul>
-<li>如果第一个操作数是对象，则返回第一个操作数</li>
-<li>如果两个操作数都是对象，则返回第一个操作数</li>
-<li>如果第一个操作数的求值结果为 false ，则返回第二个操作数</li>
-<li>如果两个操作数都是 NaN/null/undefined ，则返回 NaN/null/undefined</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<p><strong>上面四种操作可能导致强制类型转换</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">100</span>+<span class="number">10</span>;<span class="comment">//110</span></span><br><span class="line"><span class="keyword">var</span> b=<span class="number">100</span>+<span class="string">'10'</span><span class="comment">//'10010'</span></span><br><span class="line"></span><br><span class="line"><span class="number">100</span> ==<span class="string">'100'</span><span class="comment">//true</span></span><br><span class="line"><span class="number">0</span>==<span class="string">''</span><span class="comment">//true</span></span><br><span class="line"><span class="literal">null</span>==<span class="literal">undefined</span><span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a=<span class="literal">true</span>;</span><br><span class="line"><span class="keyword">if</span>(a)&#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">if</span>(b)&#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> c=<span class="string">''</span>;</span><br><span class="line"><span class="keyword">if</span>(c)&#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">10</span>&amp;&amp;<span class="number">0</span>)<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span>||<span class="string">'abc'</span>)<span class="comment">//abc</span></span><br><span class="line"><span class="built_in">console</span>.log(!<span class="built_in">window</span>.abc)<span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(!!a)<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<h3 id="面试题解答-1"><a href="#面试题解答-1" class="headerlink" title="面试题解答 1"></a>面试题解答 1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">面试题<span class="number">1</span>、JS中使用<span class="keyword">typeof</span>能得到的哪些类型？</span><br><span class="line">        <span class="keyword">typeof</span> <span class="literal">undefined</span>;<span class="comment">//undefined</span></span><br><span class="line">        <span class="keyword">typeof</span> <span class="string">'abc'</span>;<span class="comment">//string</span></span><br><span class="line">        <span class="keyword">typeof</span> <span class="number">123</span>;<span class="comment">//number</span></span><br><span class="line">        <span class="keyword">typeof</span> <span class="literal">true</span>;<span class="comment">//boolean</span></span><br><span class="line">        <span class="keyword">typeof</span> &#123;&#125;;<span class="comment">//object</span></span><br><span class="line">        <span class="keyword">typeof</span> [];<span class="comment">//object</span></span><br><span class="line">        <span class="keyword">typeof</span> <span class="literal">null</span>;<span class="comment">//object</span></span><br><span class="line">        <span class="keyword">typeof</span> <span class="built_in">console</span>.log<span class="comment">//function</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">typeof</span>只能区分值类型的详细类型，对引用类型无能为力，但可以区分出函数来</span><br><span class="line"> 面试题<span class="number">2</span>、何时使用===何时使用==？</span><br><span class="line">        <span class="keyword">if</span>(obj.a==<span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="comment">//这里相当于obj.a===null||obj.a===undefined,简写形式</span></span><br><span class="line">            <span class="comment">//这是jquery源码中推荐的方法，其他的都用===</span></span><br><span class="line">        &#125;</span><br><span class="line"> 面试题<span class="number">3</span>、JS中有哪些*内置函数*--数据封装类对象？</span><br><span class="line">      <span class="comment">//JS作为单纯语言的内置函数</span></span><br><span class="line">        <span class="built_in">Object</span></span><br><span class="line">        <span class="built_in">Array</span></span><br><span class="line">        <span class="built_in">Boolean</span></span><br><span class="line">        <span class="built_in">Number</span></span><br><span class="line">        <span class="built_in">String</span></span><br><span class="line">        <span class="built_in">Function</span></span><br><span class="line">        <span class="built_in">Date</span></span><br><span class="line">        <span class="built_in">RegExp</span></span><br><span class="line">        <span class="built_in">Error</span></span><br><span class="line">        <span class="comment">//Global浏览器内置对象</span></span><br><span class="line">        <span class="comment">//Math是对象，不是函数</span></span><br><span class="line"> 面试题<span class="number">4</span>、JS变量按照存储方式区分为哪些类型，并描述其特点</span><br><span class="line">        <span class="comment">//分为值类型和引用类型</span></span><br><span class="line">        <span class="comment">//值类型</span></span><br><span class="line">        <span class="keyword">var</span> a=<span class="number">10</span></span><br><span class="line">        <span class="keyword">var</span> b=a</span><br><span class="line">        a=<span class="number">11</span></span><br><span class="line">        <span class="built_in">console</span>.log(b)<span class="comment">//10</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//引用类型</span></span><br><span class="line">        <span class="keyword">var</span> obj1=&#123;<span class="attr">x</span>:<span class="number">100</span>&#125;</span><br><span class="line">        <span class="keyword">var</span> obj2=obj1</span><br><span class="line">        obj1.x=<span class="number">200</span></span><br><span class="line">        <span class="built_in">console</span>.log(obj2.x)<span class="comment">//200</span></span><br><span class="line">        值类型直接存储的是值</span><br><span class="line">        引用类型存储的是指向值的指针，这样做是为了节省内存</span><br><span class="line">        值类型的值赋值后不会相互干预</span><br><span class="line">        引用类型的赋值是变量指针的赋值，不是真的值的拷贝，他们的赋值是相互干预的。</span><br><span class="line"> 面试题<span class="number">5</span>、如何理解<span class="built_in">JSON</span>?</span><br><span class="line">        <span class="comment">//JSON只不过是一个JS对像而已，和MATH一样</span></span><br><span class="line">        <span class="built_in">JSON</span>.stringfy(&#123;<span class="attr">a</span>:<span class="number">10</span>,<span class="attr">b</span>:<span class="number">20</span>&#125;)</span><br><span class="line">        <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"a":10,"b":20&#125;'</span>)</span><br><span class="line">        <span class="comment">//注意:JS中为false的为 0 NaN null undefined '' false</span></span><br></pre></td></tr></table></figure>
-<h3 id="原型和原型链"><a href="#原型和原型链" class="headerlink" title="原型和原型链"></a>原型和原型链</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">*构造函数*</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.name=name;</span><br><span class="line">      <span class="keyword">this</span>.age=age;</span><br><span class="line">      <span class="keyword">this</span>.class=<span class="string">"class-1"</span>;</span><br><span class="line">      <span class="comment">//return this;//默认有这一行</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">var</span> f=<span class="keyword">new</span> Foo(<span class="string">'zhangsan'</span>,<span class="number">20</span>)</span><br><span class="line">   <span class="keyword">var</span> f1=<span class="keyword">new</span> Foo(<span class="string">'lisi'</span>,<span class="number">22</span>)<span class="comment">//创建多个对象</span></span><br><span class="line">   <span class="comment">//new对象时函数中的this初始化为空对象，参数赋值完后返回this给f和f1</span></span><br><span class="line">*构造函数--扩展*</span><br><span class="line">   <span class="keyword">var</span> a=&#123;&#125;其实是<span class="keyword">var</span> a=<span class="keyword">new</span> <span class="built_in">Object</span>()的语法糖</span><br><span class="line">   <span class="keyword">var</span> a=[]其实是<span class="keyword">var</span> a=<span class="keyword">new</span> <span class="built_in">Array</span>()的语法糖</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;...&#125;其实是<span class="keyword">var</span> Foo=<span class="keyword">new</span> <span class="built_in">Function</span>(...)</span><br><span class="line">   <span class="comment">//使用instanceof判断一个函数是否是一个变量的构造函数</span></span><br><span class="line">   <span class="comment">//对象，数组，函数的构造函数其实是Object,Array,Function</span></span><br><span class="line">   <span class="comment">//判断一个变量是否是'数组'  变量 instanceof Array</span></span><br></pre></td></tr></table></figure>
-<h4 id="原型规则-是学习原型链的基础"><a href="#原型规则-是学习原型链的基础" class="headerlink" title="原型规则(是学习原型链的基础)"></a>原型规则(是学习原型链的基础)</h4><ul>
-<li>所有的引用类型(数组，对象，函数)，都具有对像特性，即可自由扩展属性（除了null）</li>
-<li>所有的引用类型（数组，函数，对象），都有一个 _proto_ 属性，属性值是一个普通对象</li>
-<li>所有的函数，都有一个 prototype 属性，属性值也是一个普通的对象</li>
-<li>函数的 prototype 称显式原型，引用类型的 _proto 成为隐式原型</li>
-<li>所有的引用类型（数组，函数，对象），其 _proto_ 属性值都指向其构造函数的  prototype 属性值</li>
-<li>当试图获取一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的_prot__(即它的构造函数的prototype)</li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20171017192529480?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2F0ZXJfdg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">       <span class="keyword">var</span> obj=&#123;&#125;;obj.a=<span class="number">100</span>;</span><br><span class="line">       <span class="keyword">var</span> arr=[];arr.a=<span class="number">100</span>;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">       fn.a=<span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">       <span class="built_in">console</span>.log(obj.__proto__);</span><br><span class="line">       <span class="built_in">console</span>.log(arr.__proto__);</span><br><span class="line">       <span class="built_in">console</span>.log(fn.__proto__);</span><br><span class="line"></span><br><span class="line">       <span class="built_in">console</span>.log(fn.prototype)</span><br><span class="line"></span><br><span class="line">       <span class="built_in">console</span>.log(obj.__proto__===<span class="built_in">Object</span>.prototype)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.name=name;</span><br><span class="line">      &#125;             </span><br><span class="line">      Foo.prototype.alertName=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           alert(<span class="keyword">this</span>.name)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> f=<span class="keyword">new</span> Foo(<span class="string">'zhangsan'</span>);</span><br><span class="line">      f.printName=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">      &#125;</span><br><span class="line">      f.printName();</span><br><span class="line">      f.alertName();</span><br><span class="line"></span><br><span class="line">      <span class="comment">//循环对象自身的属性</span></span><br><span class="line">      <span class="keyword">var</span> item;</span><br><span class="line">      <span class="keyword">for</span>(item <span class="keyword">in</span> f)&#123;</span><br><span class="line">        <span class="comment">//高级浏览器已经在for in中屏蔽了来自原型的属性</span></span><br><span class="line">        <span class="comment">//但是这里建议大家还是加上这个判断，保证程序的健壮性</span></span><br><span class="line">        <span class="keyword">if</span>(f.hasOwnProperty(item))</span><br><span class="line">            <span class="built_in">console</span>.log(item);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">*原型链*</span><br><span class="line">   f.toString()<span class="comment">//要去f.__proto__.__proto__中去找</span></span><br><span class="line">*instanseof*</span><br><span class="line">   **注意:** <span class="comment">//用于判断引用类型属于哪个构造函数的方法</span></span><br><span class="line">    f <span class="keyword">instanceof</span> Foo的判断逻辑是:</span><br><span class="line">       f的__proto__一层一层向上找，能否对应到Foo.prototype</span><br><span class="line">    f <span class="keyword">instanceof</span> <span class="built_in">Object</span>也是正确的</span><br></pre></td></tr></table></figure>
-<h3 id="面试题解答-2"><a href="#面试题解答-2" class="headerlink" title="面试题解答 2"></a>面试题解答 2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">面试题<span class="number">1</span>、如何准确判断一个变量时数组类型？</span><br><span class="line">           <span class="keyword">var</span> arr=[]</span><br><span class="line">           arr <span class="keyword">instanceof</span> <span class="built_in">Array</span> <span class="comment">//true</span></span><br><span class="line">           <span class="keyword">typeof</span> arr<span class="comment">//object,typeof是无法判断是否是数组的</span></span><br><span class="line">    面试题<span class="number">2</span>、写一个原型链继承的例子</span><br><span class="line">       ①<span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.eat=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(<span class="string">'animal eat'</span>);</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.bark=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(<span class="string">'dog bark'</span>)</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       Dog.prototype=<span class="keyword">new</span> Animal();</span><br><span class="line">       <span class="keyword">var</span> hashiqi=<span class="keyword">new</span> Dog()</span><br><span class="line"></span><br><span class="line">       ②<span class="function"><span class="keyword">function</span> <span class="title">Elem</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">           <span class="keyword">this</span>.elem=<span class="built_in">document</span>.getElementById(id);</span><br><span class="line">       &#125;</span><br><span class="line">       Elem.prototype.html=<span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">var</span> elem=<span class="keyword">this</span>.elem;</span><br><span class="line">          <span class="keyword">if</span>(val)&#123;</span><br><span class="line">              elem.innerHTML=val;</span><br><span class="line">              <span class="keyword">return</span> <span class="keyword">this</span>;<span class="comment">//链式操作</span></span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="keyword">return</span> elem.innerHTML;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">      Elem.prototype.on=<span class="function"><span class="keyword">function</span>(<span class="params">type,fn</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">var</span> elem=<span class="keyword">this</span>.elem;</span><br><span class="line">         elem.addEventListener(type,fn);</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> elem=<span class="keyword">new</span> Elem(<span class="string">"div1"</span>);</span><br><span class="line">      elem.html(<span class="string">"&lt;p&gt;hello world&lt;/p&gt;"</span>).on(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"clicked"</span>)&#125;).html(<span class="string">"&lt;p&gt;javascript&lt;/p&gt;"</span>);</span><br><span class="line">    面试题<span class="number">3</span>、描述<span class="keyword">new</span>一个对象的过程</span><br><span class="line">       ①创建一个新对象</span><br><span class="line">       ②<span class="keyword">this</span>指向这个新对象</span><br><span class="line">       ③执行代码，即对<span class="keyword">this</span>赋值</span><br><span class="line">       ④返回<span class="keyword">this</span></span><br><span class="line">    面试题<span class="number">4</span>、zepto(或其他框架)源码中如何使用原型链</span><br><span class="line">       ①阅读源码是高效提高技能的方式</span><br><span class="line">       ②但不能“埋头苦钻”有技巧在其中</span><br><span class="line">       ③慕课网搜索“zepto设计和源码分析”</span><br></pre></td></tr></table></figure>
-<h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><p>js 是解释型语言不是编译型语言，所以有些错误在编写程序时不会报错，什么时候执行什么时候报错</p>
-<ul>
-<li>范围：一段<script>或者一个函数之内都会生成一个上下文</li>
-<li>全局：变量定义，函数声明   //执行之前，一段<script>会生成全局上下文</li>
-<li>函数：变量定义，函数声明，this，arguments //函数执行之前会生成函数上下文</li>
-<li>注意：‘函数声明’和‘函数表达式’的区别</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a);<span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">100</span></span><br><span class="line"></span><br><span class="line">fn(<span class="string">'zhangsan'</span>) <span class="comment">//'zhangsan' 20</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   age=<span class="number">20</span>;</span><br><span class="line">   <span class="built_in">console</span>.log(name,age);</span><br><span class="line">   <span class="keyword">var</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><ul>
-<li>this要在执行时才能确认值，定义时无法确认</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=&#123;</span><br><span class="line">   name:<span class="string">"A"</span>,</span><br><span class="line">   fn:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">a.fn()  <span class="comment">//this===a</span></span><br><span class="line">a.fn.call(&#123;<span class="attr">name</span>:B&#125;) <span class="comment">//this===&#123;name:'B'&#125;</span></span><br><span class="line"><span class="keyword">var</span> fn1=a.fn;</span><br><span class="line">fn1() <span class="comment">//this===window</span></span><br><span class="line"></span><br><span class="line">使用场景</span><br><span class="line">①作为构造函数执行</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">      <span class="comment">//this=&#123;&#125;;</span></span><br><span class="line">      <span class="keyword">this</span>.name=name;</span><br><span class="line">      <span class="comment">//return this</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">var</span> f=<span class="keyword">new</span> Foo(<span class="string">'zhangsan'</span>)</span><br><span class="line">②作为对象属性执行</span><br><span class="line">    <span class="keyword">var</span> obj=&#123;</span><br><span class="line">        name:<span class="string">'A'</span>,</span><br><span class="line">        printName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    obj.printName();</span><br><span class="line">③作为普通函数执行</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>)  <span class="comment">//this===window</span></span><br><span class="line">   &#125;</span><br><span class="line">   fn()</span><br><span class="line">④call apply bind</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">      alert(name);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>)  <span class="comment">//this===window</span></span><br><span class="line">   &#125;</span><br><span class="line">   fn1.call(&#123;<span class="attr">x</span>:<span class="number">100</span>&#125;,<span class="string">'zhangsan'</span>,<span class="number">20</span>)</span><br><span class="line">   fn1.apply(&#123;<span class="attr">x</span>:<span class="number">100</span>&#125;,[<span class="string">'zhangsan'</span>,<span class="number">20</span>])</span><br><span class="line">   <span class="keyword">var</span> fn2=<span class="function"><span class="keyword">function</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">      alert(name);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>)  <span class="comment">//this===&#123;x:100&#125;</span></span><br><span class="line">   &#125;.bind(&#123;<span class="attr">x</span>:<span class="number">100</span>&#125;)<span class="comment">//bind只能用函数表达式，函数声明不可用，会报错</span></span><br><span class="line">   fn2(<span class="string">'zhangsan'</span>,<span class="number">200</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">①没有块级作用域</span><br><span class="line">     <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">         <span class="keyword">var</span> name=<span class="string">'zhangsan'</span></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="built_in">console</span>.log(name)<span class="comment">//'zhangsan'</span></span><br><span class="line">②只有全局和函数作用域</span><br><span class="line">     <span class="keyword">var</span> a=<span class="number">100</span>;</span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="keyword">var</span> a=<span class="number">200</span>；</span><br><span class="line">         <span class="built_in">console</span>.log(<span class="string">'fn'</span>,a)</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">'global'</span>,a)</span><br><span class="line">     fn()</span><br></pre></td></tr></table></figure>
-<h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> b=<span class="number">200</span></span><br><span class="line">        <span class="comment">//当前作用域没有定义的变量，即'自由变量'</span></span><br><span class="line">        <span class="built_in">console</span>.log(a)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(b)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">100</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> b=<span class="number">200</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">F2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> c=<span class="number">300</span>;</span><br><span class="line">       <span class="built_in">console</span>.log(a);<span class="comment">//a是自由变量</span></span><br><span class="line">       <span class="built_in">console</span>.log(b);<span class="comment">//b是自由变量</span></span><br><span class="line">       <span class="built_in">console</span>.log(c);</span><br><span class="line">   &#125;</span><br><span class="line">   F2()</span><br><span class="line">&#125;</span><br><span class="line">F1();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>==注意==：函数的父级作用域是函数定义时候的作用域，不是函数执行时候的作用域,也就是说那个作用域定义了这个函数，这个函数的父级作用域就是谁，跟函数执行没有关系，函数自由变量要到父级作用域中找，就形成了作用域链</li>
-</ul>
-<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><ol>
-<li>实际开发中闭包的应用：封装变量，收敛权限</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">var</span> a=<span class="number">100</span>;</span><br><span class="line">     <span class="comment">//返回一个函数(函数作为返回值)</span></span><br><span class="line">     <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(a);<span class="comment">//自由变量，父作用域寻找</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//f1得到一个函数</span></span><br><span class="line"><span class="keyword">var</span> f1=F1();</span><br><span class="line"><span class="keyword">var</span> a=<span class="number">200</span>;</span><br><span class="line">f1();<span class="comment">//100</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">闭包使用场景</span><br><span class="line">①函数作为返回值</span><br><span class="line">②函数作为参数传递(函数自由变量要到父级作用域中找)</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">var</span> a=<span class="number">100</span>;</span><br><span class="line">     <span class="keyword">return</span>  <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(a);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> f1=F1();</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F2</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> a=<span class="number">200</span></span><br><span class="line">      fn();(自由变量要到声明定义时的父作用域中找，和执行的作用域没有关系)</span><br><span class="line">  &#125;</span><br><span class="line">  F2(f1);<span class="comment">//100</span></span><br></pre></td></tr></table></figure>
-<h3 id="面试题解答-3"><a href="#面试题解答-3" class="headerlink" title="面试题解答 3"></a>面试题解答 3</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">问题<span class="number">1</span>、说一下对变量提升的理解</span><br><span class="line">            ①变量的定义</span><br><span class="line">            ②函数的声明（注意和函数表达式的区别）</span><br><span class="line">      问题<span class="number">2</span>、说明<span class="keyword">this</span>几种不同的使用场景</span><br><span class="line">             参考上文**<span class="keyword">this</span>**</span><br><span class="line">      问题<span class="number">3</span>、创建<span class="number">10</span>个<span class="string">`&lt;a&gt;`</span>标签，点击的时候弹出来对应的序号</span><br><span class="line">            <span class="keyword">var</span> i;</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">            (<span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">               <span class="keyword">var</span> a=<span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line">               a.innerHTML=i+<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">               a.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">               e.preventDefault();</span><br><span class="line">               alert(i);</span><br><span class="line">              &#125;)</span><br><span class="line">              <span class="built_in">document</span>.body.appendChild(a);</span><br><span class="line">              &#125;)(i);<span class="comment">//相当于创建了10个函数</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">      问题<span class="number">4</span>、如何理解作用域</span><br><span class="line">         ①自由变量</span><br><span class="line">         ②作用域链，即自由变量的查找</span><br><span class="line">         ③闭包的两个场景</span><br><span class="line">      问题<span class="number">5</span>、实际开发中闭包的应用</span><br><span class="line">      <span class="comment">//闭包实际应用中主要用于封装变量，收敛权限</span></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">isFirstLoad</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">             <span class="keyword">var</span> _list=[];</span><br><span class="line">              <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">                 <span class="keyword">if</span>(_list.indexOf(id)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">                     <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                 &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    _list.push(id);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">              &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//使用</span></span><br><span class="line">      <span class="keyword">var</span> firstLoad=isFirstLoad();</span><br><span class="line">      firstLoad(<span class="number">10</span>);</span><br><span class="line">      firstLoad(<span class="number">10</span>);</span><br><span class="line">      firstLoad(<span class="number">20</span>);</span><br><span class="line">    <span class="comment">//你在 isFirstLoad 函数外面，根本不可能修改掉_list的值</span></span><br></pre></td></tr></table></figure>
-<h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><p><strong>何时需要异步</strong> </p>
-<ul>
-<li>①在可能发生等待的情况下 </li>
-<li>②等待过程中不能像alert一样阻塞程序运行 </li>
-<li>③因此，所以的”等待的情况”都需要异步</li>
-</ul>
-<p><strong>前端使用异步的场景</strong> </p>
-<ul>
-<li>①定时任务：setTimeout，setInterval </li>
-<li>②网络请求：ajax请求，动态加载 </li>
-<li>③事件绑定</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>) </span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">200</span>) </span><br><span class="line">&#125;,<span class="number">1000</span>) </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>) <span class="comment">//100 300 200</span></span><br></pre></td></tr></table></figure>
-<h3 id="异步示例"><a href="#异步示例" class="headerlink" title="异步示例"></a>异步示例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'start'</span>);</span><br><span class="line">$.get(<span class="string">'./data1.json'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data1</span>)</span>&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(data1);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>)<span class="comment">//'start'  'end'   data1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(start);</span><br><span class="line"><span class="keyword">var</span> img=<span class="built_in">document</span>.createElement(<span class="string">'img'</span>)</span><br><span class="line">img.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'loaded'</span>)</span><br><span class="line">&#125;<span class="comment">//图片加载完执行</span></span><br><span class="line">img.src=<span class="string">'/xx.png'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>);<span class="comment">//start end loaded</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'start'</span>)</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'btn1'</span>).addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       alert(<span class="string">'clicked'</span>);</span><br><span class="line">&#125;)<span class="comment">//点击时才会执行</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>);<span class="comment">//start clicked end</span></span><br></pre></td></tr></table></figure>
-<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)  <span class="comment">//100 200 300</span></span><br></pre></td></tr></table></figure>
-<h2 id="异步和单线程"><a href="#异步和单线程" class="headerlink" title="异步和单线程"></a>异步和单线程</h2><p>js 是单线程的语言，所以需要异步</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>) </span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">200</span>) </span><br><span class="line">&#125;) </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>) <span class="comment">//100 300 200</span></span><br></pre></td></tr></table></figure>
-<p>上述异步代码的<strong>执行过程</strong>如下</p>
-<ol>
-<li>执行第一行打印100</li>
-<li>setTimeout 异步执行，先暂存起来</li>
-<li>打印 300</li>
-<li>待所有程序执行完，处于空闲状态时，拿到暂存的函数在指定的时间后执行</li>
-</ol>
-<h3 id="面试解答-4"><a href="#面试解答-4" class="headerlink" title="面试解答 4"></a>面试解答 4</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">问题<span class="number">1</span>、同步和异步的区别是什么？分别举一个同步和异步的例子 </span><br><span class="line">①同步会阻塞代码执行，而异步不会 </span><br><span class="line">②alert是同步，setTimeout是异步</span><br><span class="line"></span><br><span class="line">问题<span class="number">2</span>、一个关于setTimeout的笔试题 </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>) </span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">2</span>) </span><br><span class="line">&#125;,<span class="number">0</span>) </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>) </span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">4</span>) </span><br><span class="line">&#125;,<span class="number">1000</span>) </span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">5</span>) </span><br><span class="line"><span class="comment">//1 3 5 2 4</span></span><br><span class="line"></span><br><span class="line">问题<span class="number">3</span>、前端使用异步的场景有哪些 </span><br><span class="line">①定时任务：setTimeout，setInterval </span><br><span class="line">②网络请求：ajax请求，动态加载 </span><br><span class="line">③事件绑定</span><br></pre></td></tr></table></figure>
-<h2 id="其他（日期、Math、各种常用API）"><a href="#其他（日期、Math、各种常用API）" class="headerlink" title="其他（日期、Math、各种常用API）"></a>其他（日期、Math、各种常用API）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">①日期 </span><br><span class="line"><span class="built_in">Date</span>.now()  <span class="comment">//获取当前时间毫秒数 </span></span><br><span class="line"><span class="keyword">var</span> dt=<span class="keyword">new</span> <span class="built_in">Date</span>() </span><br><span class="line">dt.getTime()   <span class="comment">//获取毫秒数 </span></span><br><span class="line">dt.getFullYear()   <span class="comment">//年</span></span><br><span class="line"> dt.getMonth()  <span class="comment">//月</span></span><br><span class="line">(<span class="number">0</span><span class="number">-31</span>) dt.getHours()   <span class="comment">//小时(0-23) </span></span><br><span class="line">dt.getMinutes() <span class="comment">//分钟(0-59) </span></span><br><span class="line">dt.getSeconds() <span class="comment">//(0-59)</span></span><br><span class="line"></span><br><span class="line">②<span class="built_in">Math</span> </span><br><span class="line"><span class="built_in">Math</span>.random()</span><br><span class="line">random 在实际中的应用有清除缓存的作用，是每次访问到的都不是缓存</span><br><span class="line"></span><br><span class="line">③数组API</span><br><span class="line">forEach  遍历所有元素</span><br><span class="line">  <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">     arr.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">     <span class="comment">//遍历数组的所有元素</span></span><br><span class="line">     <span class="built_in">console</span>.log(index,item)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"> every  判断所有元素是否都符合条件</span><br><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">   <span class="keyword">var</span> result=arr.every(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">      <span class="comment">//用来判断所有的数组元素，都满足一个条件</span></span><br><span class="line">        <span class="keyword">if</span>(item&lt;<span class="number">4</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">   <span class="built_in">console</span>.log(result);</span><br><span class="line"></span><br><span class="line">some  判断是否至少一个元素符合条件</span><br><span class="line">    <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">var</span> result=arr.some(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">      <span class="comment">//用来判断所有的数组元素，只要有一个满足条件即可</span></span><br><span class="line">        <span class="keyword">if</span>(item&lt;<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line"></span><br><span class="line">sort  排序</span><br><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]</span><br><span class="line">   <span class="keyword">var</span> arr2=arr.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">         <span class="comment">//从小到大排序</span></span><br><span class="line">         <span class="keyword">return</span> a-b</span><br><span class="line">         <span class="comment">//从大到小排序</span></span><br><span class="line">         <span class="comment">//return b-a</span></span><br><span class="line">   &#125;)</span><br><span class="line">   <span class="built_in">console</span>.log(arr2)</span><br><span class="line"></span><br><span class="line">map  对元素重新组装，生成新数组</span><br><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">   <span class="keyword">var</span> arr2=arr.map(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//将元素重新组装，并返回</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;b&gt;'</span>+item+<span class="string">'&lt;/b&gt;'</span></span><br><span class="line">   &#125;)</span><br><span class="line">   <span class="built_in">console</span>.log(arr2)</span><br><span class="line">filter过滤符合条件的元素</span><br><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">   <span class="keyword">var</span> arr2=arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">       <span class="comment">//通过某一个条件过滤数组</span></span><br><span class="line">       <span class="keyword">if</span>(item&gt;=<span class="number">2</span>)&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;)</span><br><span class="line">   <span class="built_in">console</span>.log(arr2)</span><br><span class="line">④对象API</span><br><span class="line">   <span class="keyword">var</span> obj=&#123;</span><br><span class="line">      x:<span class="number">100</span>,</span><br><span class="line">      y:<span class="number">200</span>,</span><br><span class="line">      z:<span class="number">300</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">var</span> key</span><br><span class="line">   <span class="keyword">for</span>(key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">      <span class="comment">//注意这里的hasOwnProperty,再讲原型链时讲过了</span></span><br><span class="line">      <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(key,obj[key])</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="面试题解答-5"><a href="#面试题解答-5" class="headerlink" title="面试题解答 5"></a>面试题解答 5</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">问题<span class="number">1</span>、获取<span class="number">2017</span><span class="number">-06</span><span class="number">-10</span>格式的日期 </span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">dt</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">if</span>(!dt)&#123;</span><br><span class="line">              dt=<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">var</span> year=dt.getFullYear();</span><br><span class="line">          <span class="keyword">var</span> month=dt.getMonth()+<span class="number">1</span>;</span><br><span class="line">          <span class="keyword">var</span> date=dt.getDate();</span><br><span class="line">          <span class="keyword">if</span>(month&lt;<span class="number">10</span>)&#123;</span><br><span class="line">             <span class="comment">//强制类型转换</span></span><br><span class="line">             month=<span class="string">"0"</span>+month;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(date&lt;<span class="number">10</span>)&#123;</span><br><span class="line">              <span class="comment">//强制类型转换</span></span><br><span class="line">              date=<span class="string">"0"</span>+month;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> year+<span class="string">"-"</span>+month+<span class="string">"-"</span>+date</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">var</span> dt=<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">     <span class="keyword">var</span> formatDate=formatDate(dt)</span><br><span class="line">     <span class="built_in">console</span>.log(formatDate)</span><br><span class="line">问题<span class="number">2</span>、获取随机数，要求是长度一直的字符串格式 </span><br><span class="line">      <span class="keyword">var</span> random=<span class="built_in">Math</span>.random()</span><br><span class="line">      <span class="keyword">var</span> random=random+<span class="string">'0000000000'</span>   <span class="comment">//后面加上10个零</span></span><br><span class="line">      <span class="keyword">var</span> random=random.slice(<span class="number">0</span>,<span class="number">10</span>)</span><br><span class="line">      <span class="built_in">console</span>.log(random)</span><br><span class="line">问题<span class="number">3</span>、写一个能遍历对象和数组的通用forEach函数</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">obj,fn</span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> key</span><br><span class="line">           <span class="comment">//准确判断是不是数据</span></span><br><span class="line">           <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>)&#123;</span><br><span class="line">                  obj.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item,inex</span>)</span>&#123;</span><br><span class="line">                         fn(index,item)</span><br><span class="line">                 &#125;)</span><br><span class="line">           &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//不是数组就是对象</span></span><br><span class="line">                <span class="keyword">for</span>(key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">                     fn(key,obj[key])</span><br><span class="line">                &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">       <span class="comment">//注意，这里参数的顺序换了，为了和对象的遍历格式一致</span></span><br><span class="line">       forEach(arr,<span class="function"><span class="keyword">function</span>(<span class="params">index,item</span>)</span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(index,item)</span><br><span class="line">       &#125;)</span><br><span class="line"></span><br><span class="line">       <span class="keyword">var</span> obj=&#123;<span class="attr">x</span>:<span class="number">100</span>,<span class="attr">y</span>:<span class="number">200</span>&#125;;</span><br><span class="line">       forEach(obj,<span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(key,value)</span><br><span class="line">       &#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="js-web-api"><a href="#js-web-api" class="headerlink" title="js-web-api"></a>js-web-api</h2><p>本期主要内容 </p>
-<ol>
-<li>Dom操作 </li>
-<li>Bom操作 </li>
-<li>事件绑定 </li>
-<li>Ajax请求(包括http协议) </li>
-<li>存储</li>
-</ol>
-<p>注意：内置函数和内置对象的区别 </p>
-<ol>
-<li>内置函数：Object Array RegExp Function Error Date Number Boolean String… </li>
-<li>内置对象：Math JSON…</li>
-</ol>
-<p>注： </p>
-<ul>
-<li>JS基础知识：ECMA 262标准 </li>
-<li>JS-WEB-API：W3C标准，它参与规定任何JS基础相关的东西，不管什么变量类型、原型、作用域和异步，只管定义用于浏览器JS操作页面的API和全局变量</li>
-</ul>
-<h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h3><ul>
-<li><p>html是xml的一种特殊结构 </p>
-</li>
-<li><p>DOM 本质：<br>DOM 可以理解为：<br>浏览器把拿到的html代码，结构化一个浏览器能识别并且js可操作性的一个模型而已</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">①获取DOM节点 </span><br><span class="line"><span class="keyword">var</span> div1=<span class="built_in">document</span>.getElementById(‘div1’)；<span class="comment">//元素 </span></span><br><span class="line"><span class="keyword">var</span> divList=<span class="built_in">document</span>.getElementsByTagName(‘div’); <span class="comment">//集合 </span></span><br><span class="line"><span class="built_in">console</span>.log(divList.length) </span><br><span class="line"><span class="built_in">console</span>.log(divList[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> containerList=<span class="built_in">document</span>.getElementsByClassName(“.contaner”)<span class="comment">//集合 </span></span><br><span class="line"><span class="keyword">var</span> pList=<span class="built_in">document</span>.querySelectorAll(‘p’)<span class="comment">//集合 </span></span><br><span class="line">②property </span><br><span class="line"><span class="keyword">var</span> pList=<span class="built_in">document</span>.querySelectorAll(‘all’); </span><br><span class="line"><span class="keyword">var</span> p=pList[<span class="number">0</span>]; </span><br><span class="line"><span class="built_in">console</span>.log(p.style.width) </span><br><span class="line">p.style.width=’<span class="number">100</span>px’ </span><br><span class="line"><span class="built_in">console</span>.log(p.className) </span><br><span class="line">p.className=’p1’</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取nodeName和nodeType </span></span><br><span class="line"><span class="built_in">console</span>.log(p.nodeName) </span><br><span class="line"><span class="built_in">console</span>.log(p.nodeType)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>DOM 结构操作<ul>
-<li>新增节点</li>
-<li>查询子节点</li>
-<li>查询父节点</li>
-<li>删除节点</li>
-</ul>
-</li>
-</ul>
-<h3 id="面试题解答-6"><a href="#面试题解答-6" class="headerlink" title="面试题解答 6"></a>面试题解答 6</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">问题1、dom是哪种基本的数据结构？ </span><br><span class="line">树 </span><br><span class="line">问题2、Dom操作的常用API有哪些？ </span><br><span class="line">①获取DOM节点，以及节点的property和Attribute </span><br><span class="line">②获取父节点，获取子节点  childNodes/ parentNode</span><br><span class="line">③新增节点，删除节点 </span><br><span class="line">问题3、Dom节点的Attribute和Property有和区别？ </span><br><span class="line">①property只是一个JS对象的属性的修改 </span><br><span class="line">②Attribute是对html标签属性的修改</span><br></pre></td></tr></table></figure>
-<h2 id="BOM操作"><a href="#BOM操作" class="headerlink" title="BOM操作"></a>BOM操作</h2><ul>
-<li>测试浏览器型号 navigator</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ua=navigator.userAgent </span><br><span class="line"><span class="keyword">var</span> isChrome=ua.indexOf(‘Chrome’) </span><br><span class="line"><span class="built_in">console</span>.log(isChrome)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>screen</li>
-<li>location</li>
-<li>history</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(screen.width) </span><br><span class="line"><span class="built_in">console</span>.log(scr)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(location.href) </span><br><span class="line"><span class="built_in">console</span>.log(location.protocal) </span><br><span class="line"><span class="built_in">console</span>.log(location.pathname) </span><br><span class="line"><span class="built_in">console</span>.log(location.search) </span><br><span class="line"><span class="built_in">console</span>.log(location.hash)</span><br><span class="line"></span><br><span class="line">history.back() </span><br><span class="line">histort.forward()</span><br></pre></td></tr></table></figure>
-<h3 id="面试题解答-7"><a href="#面试题解答-7" class="headerlink" title="面试题解答 7"></a>面试题解答 7</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">题目<span class="number">1</span>、如何检测浏览器的类型 </span><br><span class="line"><span class="keyword">var</span> ua=navigator.userAgent </span><br><span class="line"><span class="keyword">var</span> isChrome=ua.indexOf(‘Chrome’) </span><br><span class="line"><span class="built_in">console</span>.log(isChrome) </span><br><span class="line">题目<span class="number">2</span>、拆解url的各部分 </span><br><span class="line">参考location</span><br></pre></td></tr></table></figure>
-<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><ul>
-<li>通用事件绑定</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn=<span class="built_in">document</span>.getElementById(‘btn1’); </span><br><span class="line">btn.addEventListener(‘click’,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123; </span><br><span class="line"><span class="built_in">console</span>.log(‘clicked’) </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem,type,fn</span>)</span>&#123; </span><br><span class="line">elem.addEventListener(type,fn) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(‘link1’) </span><br><span class="line">bindEvent(a,’click’,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">e.preventDefault() <span class="comment">//阻止默认行为 </span></span><br><span class="line">alert(‘clicked’) </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">注：关于IE低版本的兼容性 </span><br><span class="line">①IE低版本使用attachEvent绑定事件，和W3C标准不一样 </span><br><span class="line">②IE低版本使用量以非常少，很多网站都早已不支持 </span><br><span class="line">建议对IE低版本的兼容性：了解即可，无需深究 </span><br><span class="line">如果遇到对IE低版本要求苛刻的面试，果断放弃</span><br></pre></td></tr></table></figure>
-<h3 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h3><p>在父级 div 中定义的事件，会在子级的事件执行之后冒泡上来执行</p>
-<ul>
-<li>阻止事件冒泡 e.stopPropagation() </li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p1"</span>&gt;</span>激活<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p2"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p3"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p4"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div2"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p5"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p6"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 利用阻止冒泡的机制实现：只点击 p1 的时候弹窗激活</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem,type,func</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">        elem.addEventListener(type,func)</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> p1 = <span class="built_in">document</span>.getElementById(<span class="string">'p1'</span>)</span></span><br><span class="line"><span class="javascript">      bindEvent(p1,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">        e.stopPropagation()</span></span><br><span class="line"><span class="javascript">        alert(<span class="string">'激活'</span>)</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="javascript">      bindEvent(body,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        alert(<span class="string">'取消'</span>)</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>代理</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>a1<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>a2<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>a3<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>a4<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>a5<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>fjdk<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>jfkd<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- ...随时会新增更多的 a 标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="comment">// 要求用代理的方式实现 动态事件绑定，绑定 div1 中的所有 a 标签</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>)</span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem,type,func</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">        elem.addEventListener(type,func)</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="javascript">      bindEvent(div,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e) <span class="comment">// MouseEvent</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target) <span class="comment">//  完整的 a 标签 对象 &lt;a href="#"&gt;a3&lt;/a&gt;</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target.nodeName); <span class="comment">// 都是大写</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(e.target.nodeName === <span class="string">'A'</span>)&#123;</span></span><br><span class="line"><span class="undefined">          alert(e.target.innerHTML)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">      &#125;)</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="面试题解答-8"><a href="#面试题解答-8" class="headerlink" title="面试题解答 8"></a>面试题解答 8</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">问题1、编写一个通用的事件监听函数 bind Event</span><br><span class="line"></span><br><span class="line">问题2、描述事件冒泡流程 </span><br><span class="line">①DOM树形结构 </span><br><span class="line">②事件冒泡 </span><br><span class="line">③阻止冒泡 </span><br><span class="line">④冒泡的应用(代理) </span><br><span class="line">问题3、对于一个无线下拉加载图片的页面，如何给每个图片绑定事件 </span><br><span class="line">①使用代理 </span><br><span class="line">②知道代理的两个优点 </span><br><span class="line">代码简洁 </span><br><span class="line">减少浏览器内存占用</span><br></pre></td></tr></table></figure>
-<h2 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定了请求目标，也明确了如何处理之后，就可以发送请求了</span></span><br><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">request.open(<span class="string">'GET'</span>,url,<span class="literal">true</span>);<span class="comment">// 指定请求目标，三个参数，1.GET or POST 2.请求路径 3.是否异步 （默认true，可以不写）</span></span><br><span class="line">request.onreadystatechange() = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(request.readyState === <span class="number">4</span>)&#123;</span><br><span class="line">        <span class="comment">// 请求完成</span></span><br><span class="line">        <span class="keyword">if</span>(request.status === <span class="number">200</span>)&#123;</span><br><span class="line">            <span class="comment">// 请求成功，获得一个成功的响应,此后可以开始请求成功后的处理</span></span><br><span class="line">            request.responseText<span class="comment">//responseText 保存文本字符串格式</span></span><br><span class="line">            request.responseXML<span class="comment">//responseXML 保存 Content-Type 头部中指定为 "text/html" 的数据</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 请求失败，根据响应码判断失败原因</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'error,status:'</span>+request.status)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">// 请求还在继续</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注：IE兼容性问题 </p>
-<ul>
-<li>①IE低版本使用ActiveXObject，和W3C标准不一样 </li>
-<li>②IE低版本使用量非常少，很多网站都早已不支持 </li>
-<li>③建议对IE低版本的兼容性了解即可，无需深究 </li>
-<li>④如果遇到对IE低版本要求苛刻的面试，果断放弃</li>
-</ul>
-<h2 id="http-状态码"><a href="#http-状态码" class="headerlink" title="http 状态码"></a>http 状态码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">0-（未初始化）还没有调用send()方法 </span><br><span class="line">1-（载入）已调用send()方法，正在发送请求 </span><br><span class="line">2-（载入完成）send()方法执行完成，已经接收得到全部响应内容 </span><br><span class="line">3-(交互)正在解析响应内容 </span><br><span class="line">4-（完成）响应内容解析完成，可以在客户端调用了</span><br><span class="line"></span><br><span class="line">2xx-表示成功处理请求。如200 </span><br><span class="line">3xx-需要重定向，浏览器直接跳转 </span><br><span class="line">4xx-客户端请求错误，如404 </span><br><span class="line">5xx-服务器端错误，如500</span><br></pre></td></tr></table></figure>
-<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><ul>
-<li>什么是跨域 </li>
-<li>JSONP </li>
-<li>服务器端设置http header</li>
-</ul>
-<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><h3 id="前端工程师-IDE"><a href="#前端工程师-IDE" class="headerlink" title="前端工程师 IDE"></a>前端工程师 IDE</h3><ul>
-<li>webstorm</li>
-<li>sublime </li>
-<li>vscode</li>
-<li>atom    （小清新）</li>
-</ul>
-<h3 id="Git-版本管理"><a href="#Git-版本管理" class="headerlink" title="Git 版本管理"></a>Git 版本管理</h3><ul>
-<li>正式项目都需要版本管理，可以清晰的看到历史版本</li>
-<li>多人协作开发</li>
-<li>Git 和 Linux 是一个作者</li>
-</ul>
-<h4 id="网络-Git-服务器"><a href="#网络-Git-服务器" class="headerlink" title="网络 Git 服务器"></a>网络 Git 服务器</h4><ul>
-<li>github</li>
-<li>coding.net（国内）</li>
-<li>码云</li>
-</ul>
-<h3 id="常用-git-基本命令"><a href="#常用-git-基本命令" class="headerlink" title="常用 git 基本命令"></a>常用 git 基本命令</h3><h3 id="前端构建工具"><a href="#前端构建工具" class="headerlink" title="前端构建工具"></a>前端构建工具</h3><ul>
-<li>grunt </li>
-<li>gulp</li>
-<li>fis3</li>
-<li><strong>webpack</strong></li>
-</ul>
-<h3 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h3><ul>
-<li><a href="https://segmentfault.com/a/1190000010001155">npm 基础命令</a></li>
-<li><a href="https://segmentfault.com/a/1190000006178770">入门 Webpack，看这篇就够了</a></li>
-</ul>
-<h3 id="linux-基础命令"><a href="#linux-基础命令" class="headerlink" title="linux 基础命令"></a>linux 基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1. mkdir a      // 在当前目录中创建一个空文件夹&apos;a&apos;</span><br><span class="line">2. ls           // 查看当前目录下的文件</span><br><span class="line">3. ll           // ls -l 的简写</span><br><span class="line">4. cd a         // 进入当前目录下的 a 目录</span><br><span class="line">5. pwd          // 查看当前目录的路径</span><br><span class="line">6. cd ..        // 返回上层目录</span><br><span class="line">7. rm -rf a     // 删除文件夹 a</span><br><span class="line">8. vi a.js      // 或者 vim ；编辑 a.js 文件，写入新的内容并保存则会创建；键入 i 进入插入模式，ESC 返回刚刚的模式 :w 保存 :q 退出 :wq 保存并退出</span><br><span class="line">9. cp a.js a1.js  // 拷贝 a.js 存入 a1.js </span><br><span class="line">10. mv a1.js &lt;new dir&gt;  // 将 a1.js 移动到新的文件夹下</span><br><span class="line">11. rm a.js         // 删除 a.js</span><br><span class="line">12. cat a.js    // 查看 a.js </span><br><span class="line">13. head a.js   // 查看头部内容</span><br><span class="line">14. tail a.js   // 查看尾部内容</span><br><span class="line">15. head -n 1 a.js   // 查看第一行</span><br><span class="line">16. tail -n 2 a.js   // 查看后两行</span><br><span class="line">16. grep &apos;2&apos; a.js    // 搜索 包含 &apos;2&apos;</span><br></pre></td></tr></table></figure>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><ul>
-<li>多使用内存，缓存或者其他</li>
-<li>减少 CPU 计算，减少网络请求</li>
-</ul>
-<h3 id="从哪里入手"><a href="#从哪里入手" class="headerlink" title="从哪里入手"></a>从哪里入手</h3><ul>
-<li>（加载资源）页面资源如何加载更快<ul>
-<li>静态资源的压缩合并（多个js文件合成一个js文件，减少请求）压缩代码减少体积</li>
-<li>使用静态资源缓存</li>
-<li>使用 CDN 让资源加载更快</li>
-<li>使用 SSR 后端渲染，让数据直接输出到 HTML 中</li>
-</ul>
-</li>
-<li>对于页面的渲染以及动态操作如何更快<ul>
-<li>CSS 放前面，JS 放后面</li>
-<li>懒加载（图片懒加载，下载加载）</li>
-<li>减少 DOM 查询，对 DOM 查询做缓存</li>
-<li>减少 DOM 操作，多个操作尽量合并在一起执行</li>
-<li>事件节流</li>
-</ul>
-</li>
-</ul>
-<h3 id="几个示例"><a href="#几个示例" class="headerlink" title="几个示例"></a>几个示例</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 1. 懒加载,页面首次渲染先加载一个预览图，再用用DOM操作改变其真实需要加载的图片</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span> = <span class="string">'img1'</span> <span class="attr">src</span>=<span class="string">"preview.png"</span> <span class="attr">data-relsrc</span>=<span class="string">"abc.png"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> img1 = <span class="built_in">document</span>.getElementById(<span class="string">'img1'</span>)</span></span><br><span class="line"><span class="javascript">    img1.src = img1.getAttribute(<span class="string">'data-realsrc'</span>)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 2. 缓存 DOM 查询</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">    </span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> i</span></span><br><span class="line"><span class="javascript"><span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;<span class="built_in">document</span>.getElementsByTagName(<span class="string">'p'</span>).length;i++)&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 每次循环都得执行一次 DOM 查询</span></span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 缓存 DOM 查询是这样的</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> pList = <span class="built_in">document</span>.getElementById(<span class="string">'p'</span>)</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> i</span></span><br><span class="line"><span class="javascript"><span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;pList.length;i++)&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">//TODO</span></span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 3. 合并 DOM 插入</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> listNode = <span class="built_in">document</span>.getElementById(<span class="string">'list'</span>)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 要插入 10 个 li 标签</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> frag = <span class="built_in">document</span>.createDocumentFragment()</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> i,li</span></span><br><span class="line"><span class="javascript"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;</span></span><br><span class="line"><span class="javascript">    li = <span class="built_in">document</span>.createElement(<span class="string">'li'</span>)</span></span><br><span class="line"><span class="javascript">    li.innerHTML = <span class="string">"list item "</span> + i</span></span><br><span class="line"><span class="undefined">    frag.appendChild(li)</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">listNode.appendChild(frag)<span class="comment">// 插入不是本身而是所有子孙节点</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 3. 事件节流</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> textarea = <span class="built_in">document</span>.getElementById(<span class="string">'text'</span>)</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> timeoutId</span></span><br><span class="line"><span class="javascript">textarea.addEventListener(<span class="string">'keyup'</span>,<span class="function"><span class="keyword">function</span></span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span>(timeoutId)&#123;</span></span><br><span class="line"><span class="undefined">        clearTimeout(timeoutId)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    timeoutId = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 触发 change 事件</span></span></span><br><span class="line"><span class="undefined">    &#125;,100)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="window-load"><a href="#window-load" class="headerlink" title="window.load"></a>window.load</h4><p>页面的全部资源加载完成才会执行</p>
-<h4 id="document-DOMContentLoaded"><a href="#document-DOMContentLoaded" class="headerlink" title="document.DOMContentLoaded"></a>document.DOMContentLoaded</h4><p>DOM 渲染完成即可执行，此时图片，视频还可能没有加载完</p>
-<h3 id="安全性（了解）"><a href="#安全性（了解）" class="headerlink" title="安全性（了解）"></a>安全性（了解）</h3><ul>
-<li>XSS (Cross Site Scripting) 跨站请求攻击<ul>
-<li>举例：博客文章中嵌入 script 标签，获取阅读者的 cookie 信息</li>
-<li>解决办法： 前端替换关键字或者后端替换，后端替换的效率高</li>
-</ul>
-</li>
-<li>XSRF（Cross-site request forgery） 跨站请求伪造<ul>
-<li>增加验证流程，指纹，密码，短信等</li>
-</ul>
-</li>
-</ul>
-<h2 id="面试技巧"><a href="#面试技巧" class="headerlink" title="面试技巧"></a>面试技巧</h2><ul>
-<li>好看的简历，项目经历（贴上==定期维护==的博客，个人开源项目）</li>
-<li>简历不可造假，贴上的都应在能力范围内，造假很容易出破绽</li>
-<li>如何看待加班，救急 不救 穷</li>
-<li>遇到不会回答的问题，说出知道的部分也可以，转一下问题的也比回答“不知道”好</li>
-<li>谈谈缺点：说一下最近学习的东西</li>
-<li>面试过程中面试官倾向于问怎么实现的，对于不知道怎么实现的用法要谨慎说明，类似 jquery 某个用法,只知道用法不知道原理很容易被问住</li>
-</ul>
-</script></li></ul>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/2018-实习面试准备.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Stanny">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/my-avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="腹有诗书气自华">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018-实习面试准备.html" itemprop="url">2018 暑期实习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T18:33:21+08:00">
-                2018-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="不打无准备之仗"><a href="#不打无准备之仗" class="headerlink" title="不打无准备之仗"></a>不打无准备之仗</h2><ul>
-<li>三月中旬开始投简历</li>
-<li>排除干扰，闭关复习，把该复习的都复习完毕就 ok</li>
-<li>碰壁是必然的，做好碰壁的心理准备，及时总结反思</li>
-<li>保持好状态和好心态，一定能找到好工作，被大公司录用</li>
-</ul>
-<h3 id="求职意向"><a href="#求职意向" class="headerlink" title="求职意向"></a>求职意向</h3><ul>
-<li>目标城市：杭州</li>
-<li>目标岗位：前端开发</li>
-<li>目标公司：阿里、网易</li>
-</ul>
-<h3 id="15天时间复习计划"><a href="#15天时间复习计划" class="headerlink" title="15天时间复习计划"></a>15天时间复习计划</h3><ol>
-<li><p>慕课网前端js面试技巧课程学习及总结  3.1–3.5</p>
-</li>
-<li><p>前端跳槽面试技巧总结   </p>
-</li>
-<li><p>静心归纳总结的内容，结合课程及之前 github 里的复习资源，以及师姐的整理</p>
-<ul>
-<li>HTML/CSS/JS 知识点总结  3.6–3.10</li>
-<li>项目经验总结  3.11-12</li>
-</ul>
-</li>
-<li><p>个人简历润色完善 1 天    3.13</p>
-</li>
-<li><p>内推时间紧急，3.15 必须投简历</p>
-</li>
-</ol>
-<h3 id="简历投递"><a href="#简历投递" class="headerlink" title="简历投递"></a>简历投递</h3><ol>
-<li><p>简历投递</p>
-<ul>
-<li>[x] 网易（音乐事业部、杭州）</li>
-<li>[x] 链家（北京）</li>
-<li>[x] 美团（上海）</li>
-<li>[x] 携程（上海）</li>
-<li>[ ] 今日头条</li>
-<li>[ ] 阿里</li>
-<li>[ ] 神策数据</li>
-<li>[ ] 南方基金</li>
-<li>[ ] 百度</li>
-</ul>
-</li>
-<li><p>投递简历网站的一些账户记录在网易有道云笔记</p>
-</li>
-</ol>
-<h3 id="3-月复习计划"><a href="#3-月复习计划" class="headerlink" title="3 月复习计划"></a>3 月复习计划</h3><ul>
-<li><p>[ ] 两门视频课的所有知识点</p>
-</li>
-<li><p>[ ] 简历上给自己挖的坑</p>
-</li>
-<li><p>[ ] 师姐总结的复习资源</p>
-</li>
-<li><p>[ ] 自我介绍</p>
-</li>
-</ul>
-<h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h3><p>自我介绍特别重要，结合简历上的内容<br>问题都出自于自我介绍以及简历，要会把握和预测面试方向！</p>
-<h1 id="加油！"><a href="#加油！" class="headerlink" title="加油！"></a>加油！</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/hexo-blog-配置总结.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Stanny">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/my-avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="腹有诗书气自华">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/hexo-blog-配置总结.html" itemprop="url">hexo-blog 配置总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T18:22:14+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="http://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">hexo从零开始到搭建完整 </a></li>
-<li><a href="https://segmentfault.com/a/1190000000458506" target="_blank" rel="noopener">使用Github Pages 搭建博客</a></li>
-<li><a href="https://www.jianshu.com/p/d737c7fff867" target="_blank" rel="noopener">nexT 主题配置</a></li>
-<li><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">nexT 官方文档</a></li>
-<li><a href="http://shenzekun.cn/hexo的next主题个性化配置教程.html" target="_blank" rel="noopener">hexo的next主题个性化配置教程</a></li>
-<li><a href="https://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="noopener">五分钟搭建个人博客</a></li>
-</ul>
-<h2 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h2><ol>
-<li>安装 Git Bash</li>
-<li>安装 NodeJs</li>
-<li>安装 Hexo</li>
-<li>选择喜欢的主题根据官文进行相应配置</li>
-<li>本地部署和远程部署（修改站点配置文件 deploy 配置项）</li>
-<li>新建文章</li>
-</ol>
-<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- hexo clean  清除缓存文件 (db.json) 和已经生成的静态文件 ( public )</span><br><span class="line">- hexo generate  生成静态文件</span><br><span class="line">- hexo new [layout] &apos;文件名&apos;</span><br><span class="line">- hexo server  本地部署</span><br><span class="line">- hexo deploy  远程部署</span><br></pre></td></tr></table></figure>
-<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><ol>
-<li>hexo deploy 过程中遇到 Fatal HttpRequestException Error </li>
-</ol>
-<ul>
-<li>进入 hexo 官方文档查找到 <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">解决方案</a> ：更新 git 至最新版本</li>
-</ul>
-<ol>
-<li>git 版本更新</li>
-</ol>
-<ul>
-<li><a href="https://segmentfault.com/" target="_blank" rel="noopener">segmentfault</a> 官网找到答案：直接覆盖安装即可</li>
-</ul>
-<h2 id="mark"><a href="#mark" class="headerlink" title="mark"></a>mark</h2><ol>
-<li>NexT 使用的是 <a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> 提供的图标， Font Awesome 提供了 600+ 的图标，可以满足绝大的多数的场景，同时无须担心在 Retina 屏幕下 图标模糊的问题。 </li>
-</ol>
-<h2 id="Hexo-案例"><a href="#Hexo-案例" class="headerlink" title="Hexo 案例"></a>Hexo 案例</h2><ol>
-<li><a href="http://vinnyxiong.cn/" target="_blank" rel="noopener">http://vinnyxiong.cn/</a></li>
-<li><a href="http://visugar.com/" target="_blank" rel="noopener">http://visugar.com/</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/hello-world.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Stanny">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/my-avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="腹有诗书气自华">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/hello-world.html" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T09:16:05+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1973,7 +1817,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

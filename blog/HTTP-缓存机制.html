@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="前端总结," />
+  <meta name="keywords" content="前端学习总结," />
 
 
 
@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="不打无准备之仗 三月中旬开始投简历 排除干扰，闭关复习，把该复习的都复习完毕就 ok 碰壁是必然的，做好碰壁的心理准备，及时总结反思 保持好状态和好心态，一定能找到好工作，被大公司录用  求职意向 目标城市：杭州 目标岗位：前端开发 目标公司：阿里、网易  15天时间复习计划 慕课网前端js面试技巧课程学习及总结  3.1–3.5  前端跳槽面试技巧总结     静心归纳总结的内容，结合课程及之前">
-<meta name="keywords" content="前端总结">
+<meta name="description" content="彻底弄懂 HTTP 缓存机制参考链接 参考2 缓存在前端面试中经常被问到，必须彻底弄懂机制。 Http 缓存分为两类 强缓存  协商缓存   强缓存第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。  Expires 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，">
+<meta name="keywords" content="前端学习总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2018 暑期实习">
-<meta property="og:url" content="http://yoursite.com/blog/2018-实习面试准备.html">
+<meta property="og:title" content="HTTP 缓存机制">
+<meta property="og:url" content="http://yoursite.com/blog/HTTP-缓存机制.html">
 <meta property="og:site_name" content="腹有诗书气自华">
-<meta property="og:description" content="不打无准备之仗 三月中旬开始投简历 排除干扰，闭关复习，把该复习的都复习完毕就 ok 碰壁是必然的，做好碰壁的心理准备，及时总结反思 保持好状态和好心态，一定能找到好工作，被大公司录用  求职意向 目标城市：杭州 目标岗位：前端开发 目标公司：阿里、网易  15天时间复习计划 慕课网前端js面试技巧课程学习及总结  3.1–3.5  前端跳槽面试技巧总结     静心归纳总结的内容，结合课程及之前">
+<meta property="og:description" content="彻底弄懂 HTTP 缓存机制参考链接 参考2 缓存在前端面试中经常被问到，必须彻底弄懂机制。 Http 缓存分为两类 强缓存  协商缓存   强缓存第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。  Expires 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-12T01:58:47.700Z">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210141453338-1263276228.png">
+<meta property="og:updated_time" content="2018-04-16T03:57:13.752Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2018 暑期实习">
-<meta name="twitter:description" content="不打无准备之仗 三月中旬开始投简历 排除干扰，闭关复习，把该复习的都复习完毕就 ok 碰壁是必然的，做好碰壁的心理准备，及时总结反思 保持好状态和好心态，一定能找到好工作，被大公司录用  求职意向 目标城市：杭州 目标岗位：前端开发 目标公司：阿里、网易  15天时间复习计划 慕课网前端js面试技巧课程学习及总结  3.1–3.5  前端跳槽面试技巧总结     静心归纳总结的内容，结合课程及之前">
+<meta name="twitter:title" content="HTTP 缓存机制">
+<meta name="twitter:description" content="彻底弄懂 HTTP 缓存机制参考链接 参考2 缓存在前端面试中经常被问到，必须彻底弄懂机制。 Http 缓存分为两类 强缓存  协商缓存   强缓存第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。  Expires 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png">
 
 
 
@@ -120,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/blog/2018-实习面试准备.html"/>
+  <link rel="canonical" href="http://yoursite.com/blog/HTTP-缓存机制.html"/>
 
 
 
 
 
-  <title>2018 暑期实习 | 腹有诗书气自华</title>
+  <title>HTTP 缓存机制 | 腹有诗书气自华</title>
   
 
 
@@ -253,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/2018-实习面试准备.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/HTTP-缓存机制.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stanny">
@@ -270,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2018 暑期实习</h1>
+          <h1 class="post-title" itemprop="name headline">HTTP 缓存机制</h1>
         
 
         <div class="post-meta">
@@ -282,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T18:33:21+08:00">
-                2018-03-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T11:57:13+08:00">
+                2018-04-16
               </time>
             
 
@@ -320,62 +323,39 @@
       
 
       
-        <h2 id="不打无准备之仗"><a href="#不打无准备之仗" class="headerlink" title="不打无准备之仗"></a>不打无准备之仗</h2><ul>
-<li>三月中旬开始投简历</li>
-<li>排除干扰，闭关复习，把该复习的都复习完毕就 ok</li>
-<li>碰壁是必然的，做好碰壁的心理准备，及时总结反思</li>
-<li>保持好状态和好心态，一定能找到好工作，被大公司录用</li>
-</ul>
-<h3 id="求职意向"><a href="#求职意向" class="headerlink" title="求职意向"></a>求职意向</h3><ul>
-<li>目标城市：杭州</li>
-<li>目标岗位：前端开发</li>
-<li>目标公司：阿里、网易</li>
-</ul>
-<h3 id="15天时间复习计划"><a href="#15天时间复习计划" class="headerlink" title="15天时间复习计划"></a>15天时间复习计划</h3><ol>
-<li><p>慕课网前端js面试技巧课程学习及总结  3.1–3.5</p>
+        <h1 id="彻底弄懂-HTTP-缓存机制"><a href="#彻底弄懂-HTTP-缓存机制" class="headerlink" title="彻底弄懂 HTTP 缓存机制"></a>彻底弄懂 HTTP 缓存机制</h1><p><a href="https://www.cnblogs.com/chenqf/p/6386163.html" target="_blank" rel="noopener">参考链接</a></p>
+<p><a href="https://segmentfault.com/a/1190000008956069" target="_blank" rel="noopener">参考2</a></p>
+<p>缓存在前端面试中经常被问到，必须彻底弄懂机制。</p>
+<h2 id="Http-缓存分为两类"><a href="#Http-缓存分为两类" class="headerlink" title="Http 缓存分为两类"></a>Http 缓存分为两类</h2><ol>
+<li><p>强缓存</p>
 </li>
-<li><p>前端跳槽面试技巧总结   </p>
-</li>
-<li><p>静心归纳总结的内容，结合课程及之前 github 里的复习资源，以及师姐的整理</p>
-<ul>
-<li>HTML/CSS/JS 知识点总结  3.6–3.10</li>
-<li>项目经验总结  3.11-12</li>
-</ul>
-</li>
-<li><p>个人简历润色完善 1 天    3.13</p>
-</li>
-<li><p>内推时间紧急，3.15 必须投简历</p>
+<li><p>协商缓存</p>
 </li>
 </ol>
-<h3 id="简历投递"><a href="#简历投递" class="headerlink" title="简历投递"></a>简历投递</h3><ol>
-<li><p>简历投递</p>
-<ul>
-<li>[x] 网易（音乐事业部、杭州）</li>
-<li>[x] 链家（北京）</li>
-<li>[x] 美团（上海）</li>
-<li>[x] 携程（上海）</li>
-<li>[ ] 今日头条</li>
-<li>[ ] 阿里</li>
-<li>[ ] 神策数据</li>
-<li>[ ] 南方基金</li>
-<li>[ ] 百度</li>
-</ul>
-</li>
-<li><p>投递简历网站的一些账户记录在网易有道云笔记</p>
-</li>
+<h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><p>第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。</p>
+<ol>
+<li><code>Expires</code> 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，http1.1的版本使用<code>Cache-Control</code>替代。</li>
+<li><code>Cache-Control</code> 相对时间，max-age=xxx（单位： 秒）；在指定时间内，直接使用缓存资源。</li>
 </ol>
-<h3 id="3-月复习计划"><a href="#3-月复习计划" class="headerlink" title="3 月复习计划"></a>3 月复习计划</h3><ul>
-<li><p>[ ] 两门视频课的所有知识点</p>
-</li>
-<li><p>[ ] 简历上给自己挖的坑</p>
-</li>
-<li><p>[ ] 师姐总结的复习资源</p>
-</li>
-<li><p>[ ] 自我介绍</p>
-</li>
-</ul>
-<h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h3><p>自我介绍特别重要，结合简历上的内容<br>问题都出自于自我介绍以及简历，要会把握和预测面试方向！</p>
-<h1 id="加油！"><a href="#加油！" class="headerlink" title="加油！"></a>加油！</h1>
+<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><p>需要和服务器进行协商对比判断是否可以使用缓存。<br>第一次请求数据时，服务器会将缓存标识和数据一起返回，客户端将两者进行缓存备份。再次请求时，客户端将缓存标识一并发送，服务端根据缓存标识判断客户端是否可以直接使用缓存，判断成功，返回304状态码。</p>
+<ol>
+<li><code>Last-Modified</code>  （服务器返回首部字段）浏览器首次请求，服务器在响应请求时，告诉浏览器资源最后被修改的时间</li>
+<li><code>Last-Modified-Since</code> （客户端发送的首部字段）浏览器再次请求， 该字段保存的就是首次请求服务器返回的 <code>Last-Modified</code> 值，服务器拿到该值后进行对比，若值未变则返回304状态码，若该值小于服务器端的值，说明资源已被更新，服务器返回新的资源，返回成功状态码200OK；</li>
+<li><code>Etag</code> 第一次请求时，服务器返回的资源唯一标识。</li>
+<li><code>If-None-Match</code>  再次请求服务器，客户端将缓存的资源唯一标识以这个首部字段进行发送，客户端拿到这个值进行对比，若一样，则返回304，通知浏览器可以直接使用浏览器的缓存；若不一样，说明资源有改动，服务器响应新的资源。</li>
+</ol>
+<h4 id="浏览器首次请求"><a href="#浏览器首次请求" class="headerlink" title="浏览器首次请求"></a>浏览器首次请求</h4><p><img src="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png" alt="image"></p>
+<h4 id="浏览器再次请求"><a href="#浏览器再次请求" class="headerlink" title="浏览器再次请求"></a>浏览器再次请求</h4><p><img src="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210141453338-1263276228.png" alt="image"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>第一次请求缓存资源后（也有可能不缓存 如果第一次请求服务器返回的 <code>Cache-Control</code> 值为<code>no-store</code> 则所有的资源都不会被缓存），浏览器再次请求时，先判断缓存资源是否过期，如果没有过期则直接取得缓存资源，不用再请求服务器。</li>
+<li>若过期，则进行协商缓存（缓存资源若没有被修改则仍然有效），服务器根据客户端请求发送的资源唯一标识符（<code>Last-Modified-Since</code>和<code>If-None-Match</code>）和服务器端的值（<code>Last-Modified</code>和<code>Etag</code>）进行对比，对比成功则返回304，告知服务器端可以直接使用浏览器端缓存资源。</li>
+</ol>
+<h2 id="附：HTTP状态码"><a href="#附：HTTP状态码" class="headerlink" title="附：HTTP状态码"></a>附：HTTP状态码</h2><p>1XX：服务器收到请求，请求i进行中</p>
+<p>2XX：请求成功，200 OK</p>
+<p>3XX：重定向，需要进一步的操作以完成请求。301 永久重定向；302 临时重定向；304 not modified</p>
+<p>4XX：客户端错误，401 Unauthorized（未授权）403 Forbidden（禁止访问） 404 not found（资源未找到）</p>
+<p>5XX：服务器错误，500 Internal Server Error（服务器内部错误，无法完成请求）； 502 Bad Gateway（网关错误）；  503 Service Unavailable（服务器临时宕机）；505 HTTP Version not supported（服务器不支持请求的 http 版本）</p>
+
       
     </div>
     
@@ -392,7 +372,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端总结/" rel="tag"># 前端总结</a>
+            <a href="/tags/前端学习总结/" rel="tag"># 前端学习总结</a>
           
         </div>
       
@@ -405,8 +385,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/hexo-blog-配置总结.html" rel="next" title="hexo-blog 配置总结">
-                <i class="fa fa-chevron-left"></i> hexo-blog 配置总结
+              <a href="/blog/js实现斐波那契取第n个值方法优化.html" rel="next" title="js实现斐波那契取第n个值方法优化">
+                <i class="fa fa-chevron-left"></i> js实现斐波那契取第n个值方法优化
               </a>
             
           </div>
@@ -414,10 +394,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/前端js面试技巧慕课笔记.html" rel="prev" title=" 前端js面试技巧慕课笔记">
-                 前端js面试技巧慕课笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -544,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#不打无准备之仗"><span class="nav-number">1.</span> <span class="nav-text">不打无准备之仗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求职意向"><span class="nav-number">1.1.</span> <span class="nav-text">求职意向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15天时间复习计划"><span class="nav-number">1.2.</span> <span class="nav-text">15天时间复习计划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简历投递"><span class="nav-number">1.3.</span> <span class="nav-text">简历投递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-月复习计划"><span class="nav-number">1.4.</span> <span class="nav-text">3 月复习计划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自我介绍"><span class="nav-number">1.5.</span> <span class="nav-text">自我介绍</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加油！"><span class="nav-number"></span> <span class="nav-text">加油！</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#彻底弄懂-HTTP-缓存机制"><span class="nav-number">1.</span> <span class="nav-text">彻底弄懂 HTTP 缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Http-缓存分为两类"><span class="nav-number">1.1.</span> <span class="nav-text">Http 缓存分为两类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强缓存"><span class="nav-number">1.1.1.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协商缓存"><span class="nav-number">1.1.2.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器首次请求"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">浏览器首次请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器再次请求"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">浏览器再次请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附：HTTP状态码"><span class="nav-number">1.3.</span> <span class="nav-text">附：HTTP状态码</span></a></li></ol></li></ol></div>
             
 
           </div>
