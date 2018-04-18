@@ -88,7 +88,7 @@
 <meta property="og:description" content="2018-04-15 腾讯 HTML表单控件类型 项目架构图绘制 第一个项目的难点 为什么选择Oracle 多用户同时想访问同一数据库表，如何做容灾，回答多种方案 Tomcat 用作 webserver 的原理（如何实现），其他还有哪些webserver以及如何实现 java 中的 GC 本科/研究生学过的课程  答案整理 HTML表单用于收集不同类型的用户输入。包含不同类型的 input 元素、">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20161211224045888?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaW1qdHJzenk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-04-15T13:01:19.066Z">
+<meta property="og:updated_time" content="2018-04-18T02:10:34.662Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="腾讯面试总结">
 <meta name="twitter:description" content="2018-04-15 腾讯 HTML表单控件类型 项目架构图绘制 第一个项目的难点 为什么选择Oracle 多用户同时想访问同一数据库表，如何做容灾，回答多种方案 Tomcat 用作 webserver 的原理（如何实现），其他还有哪些webserver以及如何实现 java 中的 GC 本科/研究生学过的课程  答案整理 HTML表单用于收集不同类型的用户输入。包含不同类型的 input 元素、">
@@ -367,13 +367,34 @@
 </li>
 <li><p>java中的 GC （Garbage Collecation），垃圾回收；这是 java 与 C/C++ 的主要区别之一，在java开发时一般不需要专门编写内存回收和垃圾清理代码；jvm中存在垃圾自动回收机制；</p>
 </li>
-<li>js 具有自动垃圾回收机制，原理：垃圾收集器会定期找出那些不再使用的变量，然后释放其内存。两种实现方式。存在的问题：进行GC时，会停止响应其他操作。对于游戏、动画等应用会造成不好用户体验。<ul>
+<li><p>js 具有自动垃圾回收机制，原理：垃圾收集器会定期找出那些不再使用的变量，然后释放其内存。两种实现方式。存在的问题：进行GC时，会停止响应其他操作。对于游戏、动画等应用会造成不好用户体验。</p>
+<ul>
 <li>标记清除：对不再使用的变量打上标记（进入环境，离开环境），便于垃圾收集齐下次回收</li>
 <li>引用计数：跟踪每个值被引用的次数，当引用次数为0时，进行垃圾回收，释放内存。</li>
 </ul>
 </li>
-<li>本科学过的课程：客户关系管理；网络营销；运筹学；管理学；经济学；电子商务</li>
-<li>研究生课程：数据库；算法设计；web工程与技术；数理逻辑；软件工程方法论</li>
+<li><p>本科学过的课程：客户关系管理；网络营销；运筹学；管理学；经济学；电子商务</p>
+</li>
+<li><p>研究生课程：数据库；算法设计；web工程与技术；数理逻辑；软件工程方法论</p>
+</li>
+</ol>
+<h3 id="Redis-amp-amp-Oracle-有没有用过，一定要回答有"><a href="#Redis-amp-amp-Oracle-有没有用过，一定要回答有" class="headerlink" title="Redis&amp;&amp;Oracle 有没有用过，一定要回答有"></a>Redis&amp;&amp;Oracle 有没有用过，一定要回答有</h3><p><a href="https://blog.csdn.net/softwave/article/details/51084101" target="_blank" rel="noopener">参考：redis基本使用</a></p>
+<ol>
+<li>Reids：有但接触的不是很多，redis是把数据全部放在内存中进行操作，它的特点是数据读写速度非常快，最高可以支持10w/s 的处理速度，非常适合大数据处理需要。<ul>
+<li>它以<code>key-vaule</code> 形式进行存储数据，它的值可以存储很多数据结构类型，有字符串、哈希、列表、集合等。现有系统存储的有列表或者hash；</li>
+<li>支持master-slave模式的数据备份。</li>
+<li>通过一些命令行(<code>command keyname</code>)对数据进行操作，常见的有<code>set</code>,<code>get</code>,<code>del</code> <code>exists</code>  redis 命令不区分大小写</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://www.cnblogs.com/opensesame/p/6073965.html" target="_blank" rel="noopener">Oracle  sql 基本操作</a></p>
+<ol>
+<li>Oracle: 关系型数据库，采用了关系模型来组织数据；简单来说，关系模型就是二维表格模型，而一个关系型数据库就是由二维表及其之间的联系所组成的一个数据组织。<ul>
+<li>优点：数据安全性强，稳定性强，使用方便，易于维护。</li>
+<li>缺点：没有开源，用户数正在逐渐变少。不能完成高并发读写请求。</li>
+<li>使用SQL语句实现增删改查。</li>
+</ul>
+</li>
 </ol>
 
       
@@ -498,7 +519,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -544,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2018-04-15-腾讯"><span class="nav-number">1.</span> <span class="nav-text">2018-04-15 腾讯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#答案整理"><span class="nav-number">1.0.1.</span> <span class="nav-text">答案整理</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2018-04-15-腾讯"><span class="nav-number">1.</span> <span class="nav-text">2018-04-15 腾讯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#答案整理"><span class="nav-number">1.0.1.</span> <span class="nav-text">答案整理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-amp-amp-Oracle-有没有用过，一定要回答有"><span class="nav-number">1.0.2.</span> <span class="nav-text">Redis&amp;&amp;Oracle 有没有用过，一定要回答有</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

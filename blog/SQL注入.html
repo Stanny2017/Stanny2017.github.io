@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="前端模块化参考链接 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。  加载模块 require  输出模块用module.exports   可以顺畅连接各个模块，实现彼此之间的依赖关系。   AMD Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系">
+<meta name="description" content="参考链接  含义：SQL injection: 将恶意的 SQL 语句 插入 web 表单递交页面请求的查询字符串中，欺骗服务器执行恶意的 SQL 命令。 防御措施：1.通过正则表达式校验用户输入  2.sql语句预编译和绑定变量   web 安全 XSS：跨站脚本攻击：无需用户登陆，在html页面中注入恶意脚本。  关键字替换  ​  CSRF ：跨站请求伪造：需用户登陆，冒充用户，以用户身份发">
 <meta name="keywords" content="前端学习总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端模块化">
-<meta property="og:url" content="http://yoursite.com/blog/前端模块化.html">
+<meta property="og:title" content="SQL注入">
+<meta property="og:url" content="http://yoursite.com/blog/SQL注入.html">
 <meta property="og:site_name" content="腹有诗书气自华">
-<meta property="og:description" content="前端模块化参考链接 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。  加载模块 require  输出模块用module.exports   可以顺畅连接各个模块，实现彼此之间的依赖关系。   AMD Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系">
+<meta property="og:description" content="参考链接  含义：SQL injection: 将恶意的 SQL 语句 插入 web 表单递交页面请求的查询字符串中，欺骗服务器执行恶意的 SQL 命令。 防御措施：1.通过正则表达式校验用户输入  2.sql语句预编译和绑定变量   web 安全 XSS：跨站脚本攻击：无需用户登陆，在html页面中注入恶意脚本。  关键字替换  ​  CSRF ：跨站请求伪造：需用户登陆，冒充用户，以用户身份发">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-13T02:40:32.198Z">
+<meta property="og:updated_time" content="2018-04-17T15:12:00.889Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端模块化">
-<meta name="twitter:description" content="前端模块化参考链接 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。  加载模块 require  输出模块用module.exports   可以顺畅连接各个模块，实现彼此之间的依赖关系。   AMD Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系">
+<meta name="twitter:title" content="SQL注入">
+<meta name="twitter:description" content="参考链接  含义：SQL injection: 将恶意的 SQL 语句 插入 web 表单递交页面请求的查询字符串中，欺骗服务器执行恶意的 SQL 命令。 防御措施：1.通过正则表达式校验用户输入  2.sql语句预编译和绑定变量   web 安全 XSS：跨站脚本攻击：无需用户登陆，在html页面中注入恶意脚本。  关键字替换  ​  CSRF ：跨站请求伪造：需用户登陆，冒充用户，以用户身份发">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/blog/前端模块化.html"/>
+  <link rel="canonical" href="http://yoursite.com/blog/SQL注入.html"/>
 
 
 
 
 
-  <title>前端模块化 | 腹有诗书气自华</title>
+  <title>SQL注入 | 腹有诗书气自华</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/前端模块化.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/SQL注入.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stanny">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">前端模块化</h1>
+          <h1 class="post-title" itemprop="name headline">SQL注入</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T10:07:24+08:00">
-                2018-04-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T22:29:39+08:00">
+                2018-04-17
               </time>
             
 
@@ -320,24 +320,29 @@
       
 
       
-        <h1 id="前端模块化"><a href="#前端模块化" class="headerlink" title="前端模块化"></a>前端模块化</h1><p><a href="https://www.cnblogs.com/qianshui/p/5216580.html" target="_blank" rel="noopener">参考链接</a></p>
-<p>模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码</p>
-<h4 id="common-JS"><a href="#common-JS" class="headerlink" title="common JS"></a>common JS</h4><ol>
-<li><p>每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。</p>
+        <p><a href="http://www.cnblogs.com/rush/archive/2011/12/31/2309203.html" target="_blank" rel="noopener">参考链接</a></p>
+<ol>
+<li>含义：SQL injection: 将恶意的 SQL 语句 插入 web 表单递交页面请求的查询字符串中，欺骗服务器执行恶意的 SQL 命令。</li>
+<li>防御措施：1.通过正则表达式校验用户输入  2.sql语句预编译和绑定变量 </li>
+</ol>
+<h2 id="web-安全"><a href="#web-安全" class="headerlink" title="web 安全"></a>web 安全</h2><ol>
+<li><p>XSS：跨站脚本攻击：无需用户登陆，在html页面中注入恶意脚本。</p>
+<ul>
+<li>关键字替换</li>
+</ul>
+<p>​</p>
 </li>
-<li><p>加载模块 <code>require</code>  输出模块用<code>module.exports</code> </p>
-</li>
-<li><p>可以顺畅连接各个模块，实现彼此之间的依赖关系。</p>
+<li><p>CSRF ：跨站请求伪造：需用户登陆，冒充用户，以用户身份发送恶意请求</p>
+<p><a href="https://blog.csdn.net/zhi_miss/article/details/51338401" target="_blank" rel="noopener">参考</a></p>
+<ul>
+<li>a.在请求地址中添加token并验证</li>
+<li>b.验证HTTP Referer字段</li>
+<li>c.在http头中自定义属性并验证</li>
+<li>d.验证码</li>
+</ul>
+<p>​</p>
 </li>
 </ol>
-<h4 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h4><ul>
-<li>Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系列的问题</li>
-<li>AMD就是 异步模块定义，是require JS对模块定义的规范产出 ，它可以实现异步模块加载，并且会提前加载</li>
-</ul>
-<h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><ul>
-<li>通用模块定义，是SeaJS对模块定义的规范产出。</li>
-<li>延迟执行</li>
-</ul>
 
       
     </div>
@@ -368,8 +373,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/Vue-js-学习心得.html" rel="next" title="Vue.js 学习心得 ">
-                <i class="fa fa-chevron-left"></i> Vue.js 学习心得 
+              <a href="/blog/前端面试题资料集锦.html" rel="next" title="前端面试题资料集锦">
+                <i class="fa fa-chevron-left"></i> 前端面试题资料集锦
               </a>
             
           </div>
@@ -378,8 +383,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/重大漏洞.html" rel="prev" title="重大漏洞">
-                重大漏洞 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/阿里菜鸟网络前端面试总结.html" rel="prev" title="阿里菜鸟网络前端面试总结">
+                阿里菜鸟网络前端面试总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -507,7 +512,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前端模块化"><span class="nav-number">1.</span> <span class="nav-text">前端模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common-JS"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">common JS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AMD"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">AMD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMD"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">CMD</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web-安全"><span class="nav-number">1.</span> <span class="nav-text">web 安全</span></a></li></ol></div>
             
 
           </div>
