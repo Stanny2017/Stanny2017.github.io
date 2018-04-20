@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="前端模块化参考链接 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。  加载模块 require  输出模块用module.exports   可以顺畅连接各个模块，实现彼此之间的依赖关系。   AMD Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系">
+<meta name="description" content="前端模块化参考1参考2 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域（闭包），避免了全局命名冲突。 加载模块 require  输出模块用module.exports  可以顺畅连接各个模块，实现彼此之间的依赖关系。 在NodeJs里使用  AMD Common JS是同步加载模块，放到浏览器">
 <meta name="keywords" content="前端学习总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端模块化">
 <meta property="og:url" content="http://yoursite.com/blog/前端模块化.html">
 <meta property="og:site_name" content="腹有诗书气自华">
-<meta property="og:description" content="前端模块化参考链接 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。  加载模块 require  输出模块用module.exports   可以顺畅连接各个模块，实现彼此之间的依赖关系。   AMD Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系">
+<meta property="og:description" content="前端模块化参考1参考2 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域（闭包），避免了全局命名冲突。 加载模块 require  输出模块用module.exports  可以顺畅连接各个模块，实现彼此之间的依赖关系。 在NodeJs里使用  AMD Common JS是同步加载模块，放到浏览器">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-13T02:40:32.198Z">
+<meta property="og:updated_time" content="2018-04-20T08:49:46.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端模块化">
-<meta name="twitter:description" content="前端模块化参考链接 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。  加载模块 require  输出模块用module.exports   可以顺畅连接各个模块，实现彼此之间的依赖关系。   AMD Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系">
+<meta name="twitter:description" content="前端模块化参考1参考2 模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码 common JS 每个单独的模块都是都是一个单独的作用域（闭包），避免了全局命名冲突。 加载模块 require  输出模块用module.exports  可以顺畅连接各个模块，实现彼此之间的依赖关系。 在NodeJs里使用  AMD Common JS是同步加载模块，放到浏览器">
 
 
 
@@ -320,15 +320,13 @@
       
 
       
-        <h1 id="前端模块化"><a href="#前端模块化" class="headerlink" title="前端模块化"></a>前端模块化</h1><p><a href="https://www.cnblogs.com/qianshui/p/5216580.html" target="_blank" rel="noopener">参考链接</a></p>
+        <h1 id="前端模块化"><a href="#前端模块化" class="headerlink" title="前端模块化"></a>前端模块化</h1><p><a href="https://www.cnblogs.com/qianshui/p/5216580.html" target="_blank" rel="noopener">参考1</a><br><a href="https://www.cnblogs.com/futai/p/5258349.html" target="_blank" rel="noopener">参考2</a></p>
 <p>模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码</p>
 <h4 id="common-JS"><a href="#common-JS" class="headerlink" title="common JS"></a>common JS</h4><ol>
-<li><p>每个单独的模块都是都是一个单独的作用域，避免了全局命名冲突。</p>
-</li>
-<li><p>加载模块 <code>require</code>  输出模块用<code>module.exports</code> </p>
-</li>
-<li><p>可以顺畅连接各个模块，实现彼此之间的依赖关系。</p>
-</li>
+<li>每个单独的模块都是都是一个单独的作用域（闭包），避免了全局命名冲突。</li>
+<li>加载模块 <code>require</code>  输出模块用<code>module.exports</code> </li>
+<li>可以顺畅连接各个模块，实现彼此之间的依赖关系。</li>
+<li>在NodeJs里使用</li>
 </ol>
 <h4 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h4><ul>
 <li>Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系列的问题</li>
@@ -336,8 +334,15 @@
 </ul>
 <h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><ul>
 <li>通用模块定义，是SeaJS对模块定义的规范产出。</li>
-<li>延迟执行</li>
+<li>预先下载，延迟执行</li>
+<li>为什么延迟执行</li>
 </ul>
+<h1 id="AMD、CMD异同"><a href="#AMD、CMD异同" class="headerlink" title="AMD、CMD异同"></a>AMD、CMD异同</h1><h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><p>AMD 和 CMD 最明显的区别就是在模块定义时对依赖的处理不同</p>
+<ol>
+<li>AMD 推崇依赖前置，在定义模块的时候就会声明其依赖的模块，提前加载。</li>
+<li>CMD 推崇依赖就近，只有在用到某个模块的时候再去require。</li>
+</ol>
+<h3 id="相同"><a href="#相同" class="headerlink" title="相同"></a>相同</h3><p>//TODO</p>
 
       
     </div>
@@ -378,8 +383,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/重大漏洞.html" rel="prev" title="重大漏洞">
-                重大漏洞 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/递归回溯.html" rel="prev" title="前端模块化">
+                前端模块化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -461,7 +466,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -474,7 +479,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -507,7 +512,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前端模块化"><span class="nav-number">1.</span> <span class="nav-text">前端模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common-JS"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">common JS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AMD"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">AMD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMD"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">CMD</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前端模块化"><span class="nav-number">1.</span> <span class="nav-text">前端模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common-JS"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">common JS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AMD"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">AMD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMD"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">CMD</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AMD、CMD异同"><span class="nav-number">2.</span> <span class="nav-text">AMD、CMD异同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不同点"><span class="nav-number">2.0.1.</span> <span class="nav-text">不同点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相同"><span class="nav-number">2.0.2.</span> <span class="nav-text">相同</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

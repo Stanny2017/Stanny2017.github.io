@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="面试题 自我介绍 项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累 数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量 let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现 ES6 class 深拷贝浅拷贝，浅拷贝一个字符串然后修改它的值，原先的值会不会被改变；深拷贝实现原理，除了遍历递归的方法，还有">
+<meta name="description" content="面试题 自我介绍  项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累  数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量  let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现 123456789101112const obj =&amp;#123;  name:&apos;xiaoqian-Guo&apos;,  age:1">
 <meta name="keywords" content="前端学习总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里菜鸟网络前端面试总结">
 <meta property="og:url" content="http://yoursite.com/blog/阿里菜鸟网络前端面试总结.html">
 <meta property="og:site_name" content="腹有诗书气自华">
-<meta property="og:description" content="面试题 自我介绍 项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累 数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量 let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现 ES6 class 深拷贝浅拷贝，浅拷贝一个字符串然后修改它的值，原先的值会不会被改变；深拷贝实现原理，除了遍历递归的方法，还有">
+<meta property="og:description" content="面试题 自我介绍  项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累  数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量  let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现 123456789101112const obj =&amp;#123;  name:&apos;xiaoqian-Guo&apos;,  age:1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-18T09:13:51.478Z">
+<meta property="og:updated_time" content="2018-04-20T09:52:36.882Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里菜鸟网络前端面试总结">
-<meta name="twitter:description" content="面试题 自我介绍 项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累 数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量 let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现 ES6 class 深拷贝浅拷贝，浅拷贝一个字符串然后修改它的值，原先的值会不会被改变；深拷贝实现原理，除了遍历递归的方法，还有">
+<meta name="twitter:description" content="面试题 自我介绍  项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累  数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量  let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现 123456789101112const obj =&amp;#123;  name:&apos;xiaoqian-Guo&apos;,  age:1">
 
 
 
@@ -321,42 +321,126 @@
 
       
         <h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><ol>
-<li>自我介绍</li>
-<li>项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累</li>
-<li>数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量</li>
-<li>let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现</li>
-<li>ES6 class</li>
-<li>深拷贝浅拷贝，浅拷贝一个字符串然后修改它的值，原先的值会不会被改变；深拷贝实现原理，除了遍历递归的方法，还有吗（遍历对象的方法有哪些）</li>
-<li>某一个对象的属性无法被遍历（Enumerable:false）,在这种情况下如何实现深拷贝。</li>
-<li>prototype 和 _proto_   两者之间如何转换</li>
+<li><p>自我介绍</p>
+</li>
+<li><p>项目前端的技术栈 除了jQ 和 Bootstrap 还有什么，自己还有哪些技术积累</p>
+</li>
+<li><p>数据类型（7种） Symbol类型的特点、如何定义两个相等的Symbol变量</p>
+</li>
+<li><p>let、 const、var；如果用const定义一个对象，不想里面的属性值被改变如何实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj =&#123;</span><br><span class="line">  name:<span class="string">'xiaoqian-Guo'</span>,</span><br><span class="line">  age:<span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperties(obj,&#123;</span><br><span class="line">  name:&#123;</span><br><span class="line">    writable:<span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  age:&#123;</span><br><span class="line">    writable:<span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>ES6 class </p>
+</li>
+<li><p><a href="https://www.zhihu.com/question/23031215" target="_blank" rel="noopener">深拷贝浅拷贝</a>，浅拷贝一个字符串然后修改它的值，原先的值会不会被改变；深拷贝实现原理，除了遍历递归的方法，还有吗（遍历对象的方法有哪些） </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//深拷贝浅拷贝的区别在于对对象的拷贝结果不一样；浅拷贝是对对象地址的复制（浅拷贝对象修改一个会影响另一个），深拷贝是开辟新的栈，两个对象对应不同的地址。</span><br><span class="line">//深拷贝方法：</span><br><span class="line">1. ES 6 Object.assgin()（深拷贝）只拷贝可枚举的属性，</span><br><span class="line">2. JSON序列化再parse （深拷贝，但是忽略属性值是function的属性）</span><br><span class="line">3. $.extend()</span><br><span class="line">// 遍历对象属性key的方法：</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>某一个对象的属性无法被遍历（Enumerable:false）,在这种情况下如何实现深拷贝。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Object.getOwnPropertyNames() 可以循环遍历到可枚举或不可枚举的属性</span></span><br><span class="line"><span class="comment">// Reflect.ownKeys()  无敌，可枚举不可枚举 symbol类型值均可遍历</span></span><br><span class="line"><span class="comment">// Object.getOwnPropertySymbols() 循环遍历 symbol 类型的属性</span></span><br><span class="line"><span class="keyword">let</span> obj2 = &#123;</span><br><span class="line">    [<span class="built_in">Symbol</span>(<span class="string">'my_key'</span>)]: <span class="number">1</span>,</span><br><span class="line">    enum: <span class="number">2</span>,</span><br><span class="line">    nonEnum: <span class="number">3</span></span><br><span class="line">  &#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj2,<span class="string">'newPro'</span>,&#123;</span><br><span class="line">    value:<span class="string">'newPro'</span>,</span><br><span class="line">    enumerable:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'================'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Reflect</span>.ownKeys(obj2))<span class="comment">//["enum", "nonEnum", "newPro", Symbol(my_key)]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(obj2))<span class="comment">//["enum", "nonEnum", "newPro"]</span></span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>prototype 和 _proto_   两者之间如何转换</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.所有的函数都有一个prototype属性，称为显式原型</span></span><br><span class="line"><span class="comment">//2.所有的引用类型都有一个_proto_属性，称为隐式原型，属性值皆为一个普通对象</span></span><br><span class="line"><span class="comment">//3.所有的引用类型的_proto_ 都指向 其构造函数的prototype属性值</span></span><br><span class="line"><span class="comment">//4.当试图获取一个对象的属性值时，如果找不到，会去它的_proto_值上去找（就是它构造函数protoype属性值）原型链</span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>如下定义后，a.b 的值是多少；原型链的顶端是<code>Object</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.prototype.b = 1</span><br><span class="line">a._proto_.b = 2</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.prototype.b = <span class="number">1</span></span><br><span class="line">a._proto_.b = <span class="number">2</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>继承的实现方式有几种</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//知道5种：</span></span><br><span class="line"><span class="number">1.</span> 使用构造函数</span><br><span class="line"><span class="number">2.</span> 使用原型链</span><br><span class="line"><span class="number">3.</span> 组合继承</span><br><span class="line"><span class="number">4.</span> 组合的优化<span class="number">1</span>，寄生</span><br><span class="line"><span class="number">5.</span> 组合优化<span class="number">2</span>，寄生</span><br></pre></td></tr></table></figure>
 </li>
-<li>Promise；没有写 <code>then</code> 和<code>catch</code> ，用 <code>try..catch</code>包裹Promise能捕获到错误吗，不能</li>
+<li><p>Promise；没有写 <code>then</code> 和<code>catch</code> ，用 <code>try..catch</code>包裹Promise能捕获到错误吗，不能</p>
+</li>
 <li><p>ES5 新增的特性有哪些，不是ES6；<code>Object.defineProperty</code> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a===1&amp;&amp;a===2&amp;&amp;a===3  这个表达式有可能为true吗  （set和get）</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a===<span class="number">1</span>&amp;&amp;a===<span class="number">2</span>&amp;&amp;a===<span class="number">3</span>  这个表达式有可能为<span class="literal">true</span>吗  （set和get）</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>ES7 await</p>
 </li>
-<li>AMD、CMD、CommonJs 的应用场景，为什么CMD是延迟的;每个模块为什么是一个单独的作用域</li>
-<li>ES6 模块化  <code>import</code></li>
-<li>移动端开发了解多少</li>
-<li>不引用第三方库，实现动画的方法。 <code>animation</code>和<code>transition</code>的区别</li>
-<li>常见的错误捕获的方法有哪些</li>
-<li>css 选择器权重</li>
-<li>css选择器冲突带来的样式污染如何解决</li>
-<li>0.1+0.2 输出结果是多少</li>
-</ol>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
-<li><code>Symbol</code> 类型特点：<ul>
-<li>独一无二，可以保证不会与其他属性名发生冲突；</li>
-<li>不能用<code>new</code></li>
-</ul>
+<li><p>AMD、CMD、CommonJs 的应用场景，为什么CMD是延迟的;每个模块为什么是一个单独的作用域（闭包实现）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AMD：推崇依赖前置，提前加载（RequireJS）</span><br><span class="line">CMD：推崇依赖就近，延迟执行（SeaJS）</span><br><span class="line">CommonJS：一个模块就是一个作用域（NodeJS）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ES6 模块化  <code>import</code>  </p>
+</li>
+<li><p>移动端开发了解多少</p>
+</li>
+<li><p>不引用第三方库，实现动画的方法。 <code>animation</code>和<code>transition</code>的区别</p>
+<p><a href="https://blog.csdn.net/ImagineCode/article/details/78589418" target="_blank" rel="noopener">参考：CSDN</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在前端中，通常有6种方式可以实现动画</span><br><span class="line">1. js 直接实现：主要是通过 setTimeout 和 setInterval 定时修改css的样式；jQuery 的 animate就是这样实现的。问题：频繁性的重排重绘导致页面卡顿</span><br><span class="line">2. SVG</span><br><span class="line">3. canvas</span><br><span class="line">4. CSS3 animation 通过对动画完成时间和循环次数的控制，实现动画；移动端卡顿问题开启 GPU 加速解决。 </span><br><span class="line">5. CSS3 transition 是过度动画，在某个标签样式改变时进行平滑的过渡；并不能实现独立的动画</span><br><span class="line"></span><br><span class="line">css3实现动画的优势是拜托了js的控制，并且能够应用硬件加速实现复杂动画效果</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>常见的错误捕获的方法有哪些</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. try&#123;...&#125;catch&#123;...&#125;</span><br><span class="line">2. window.onerror</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>css 选择器权重</p>
+</li>
+<li><p>css选择器冲突带来的样式污染如何解决 <a href="https://blog.csdn.net/genius_yym/article/details/62482159" target="_blank" rel="noopener">参考:local</a></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*用法  :local(.类名) 加上局部作用域*/</span></span><br><span class="line"><span class="selector-pseudo">:local(.biaoge-duli)</span>&#123;</span><br><span class="line">  tbody tr td&#123;</span><br><span class="line">    <span class="selector-tag">text-align</span>: <span class="selector-tag">center</span>!<span class="selector-tag">important</span>;</span><br><span class="line">    <span class="selector-tag">color</span>: <span class="selector-id">#00cc00</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>0.1+0.2 输出结果是多少</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">不精确等于0.3</span><br><span class="line">因为计算机是二进制来存储浮点数的，无法准确表示一个浮点数，会产生误差</span><br></pre></td></tr></table></figure>
+<p>​</p>
 </li>
 </ol>
-
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p><a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">ES6:symbol</a>:es5的对象属性名都是字符串，这容易造成属性名冲突，比如我想引用一个其他人写的对象，又想为这个对象添加新的方法，这时就有可能产生冲突，<code>symbol</code>类型就是为了解决这个问题的。</p>
+<ol>
+<li><p><code>Symbol</code> 类型特点：</p>
+<ul>
+<li><p>是一种类似于字符串的数据类型，独一无二，可以保证不会与其他属性名发生冲突；</p>
+</li>
+<li><p>不能用<code>new</code>，生成的symbol是一个原始类型的值，不是对象</p>
+</li>
+<li><p>symbol值不能与其他类型的值进行运算，会报错；但可以显示转换为字符串或者布尔值，不能转换为数值类型。</p>
+</li>
+<li><p>symbol值作为对象属性名时，不能用点运算符。</p>
+</li>
+<li><p>symbol值作为属性名时，不会被<code>for...in</code> 、<code>Object.keys()</code> 、 <code>Object.getOwnPropertyNames()</code> （可遍历不可枚举的属性）遍历到,<code>Obeject.getOwnPropertySymbols()</code>可以遍历到对象中所有的<code>symbol</code>值。</p>
+</li>
+</ul>
+</li>
+<li><p><code>Reflect.ownKeys()</code>可以返回所有对象中类型的键名，包含可枚举不可枚举的以及symbol类型的值</p>
+</li>
+<li><p><code>Symbol.for()</code> 接受一个字符串作为参数，然后搜索有没有以该字符串为参数的Symbol类型值，如果有就返回，如果没有就返回的一个新的Symbol值，依据此方法可以创建两个相等的Symbol变量。实际上是同一个值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>.for(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>.for(<span class="string">'foo'</span>);</span><br><span class="line"></span><br><span class="line">s1 === s2 <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p><code>Symbol.for()</code>与<code>Symbol()</code>这两种写法，都会生成新的 <code>Symbol</code>。它们的区别是，前者会被登记在全局环境中供搜索，后者不会。<code>Symbol.for()</code>不会每次调用就返回一个新的 <code>Symbol</code> 类型的值，而是会先检查给定的key是否已经存在，如果不存在才会新建一个值。比如，如果你调用<code>Symbol.for(&quot;cat&quot;)</code>30 次，每次都会返回同一个 Symbol 值，但是调用<code>Symbol(&quot;cat&quot;)</code>30 次，会返回 30 个不同的 Symbol 值。</p>
+</li>
+<li><p><code>Symbol.keyFor</code>方法返回一个已登记的 Symbol 类型值的<code>key</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>.for(<span class="string">"foo"</span>);</span><br><span class="line"><span class="built_in">Symbol</span>.keyFor(s1) <span class="comment">// "foo"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>(<span class="string">"foo"</span>);</span><br><span class="line"><span class="built_in">Symbol</span>.keyFor(s2) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，<code>Symbol.for</code>为 Symbol 值登记的名字，是全局环境的，可以在不同的 iframe 或 service worker 中取到同一个值。</p>
+</li>
+</ol>
+<h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty()"></a><code>Object.defineProperty()</code></h2><p><a href="https://segmentfault.com/a/1190000007434923" target="_blank" rel="noopener">参考</a></p>
+<p><a href="">参考2：红宝书P139</a></p>
+<ol>
+<li><p>数据属性：</p>
+<ul>
+<li><p><code>configurable</code> :定义为false不能用delete删除属性,并且不能再次设置为 true</p>
+</li>
+<li><p><code>enumerable</code>: 定义为flase不能用<code>for-in</code> 循环返回属性 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ES5有三个操作会忽略enumerable为false的属性。</span><br><span class="line"></span><br><span class="line">for...in循环：只遍历对象自身的和继承的可枚举的属性</span><br><span class="line">Object.keys()：返回对象自身的所有可枚举的属性的键名</span><br><span class="line">JSON.stringify()：只串行化对象自身的可枚举的属性</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>writable</code>:定义为fasle不能修改属性值</p>
+</li>
+<li><p><code>value</code></p>
+</li>
+</ul>
+</li>
+<li><p>访问器属性：<code>configurable</code> <code>enumerable</code> <code>set</code> <code>get</code>  ；使用 <code>Object.defineProperty()</code> 来定义，设置访问器属性的时候不能设置 <code>value</code> 以及<code>writable</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对象字面量的getter、setter方法只能在定义对象时使用，而Object.defineProperty 方法可以为任何已存在对象的属性重新定义get与set方法。如果不是修改已有对象的属性，直接使用对象字面量的getter、setter方法更加简洁些。?? 这里有点不太理解</span></span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  _name: <span class="string">"chen"</span>,</span><br><span class="line">  _ability: <span class="string">"eat"</span>,</span><br><span class="line">  age: <span class="number">21</span>,</span><br><span class="line">  set name(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>._name = name;</span><br><span class="line">  &#125;,</span><br><span class="line">  get name() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._name;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 访问器属性包含数据值（value），在对象中定义的时候一般是用一个‘_’作为记号，用于表示只能通过对象方法访问的属性</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(person, <span class="string">"ability"</span>, &#123;</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._ability;</span><br><span class="line">  &#125;,</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span>(<span class="params">newValue</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._ability = newValue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> descriptor1 = <span class="built_in">Object</span>.getOwnPropertyDescriptor(person, <span class="string">"name"</span>); <span class="comment">//访问器属性</span></span><br><span class="line"><span class="keyword">var</span> descriptor2 = <span class="built_in">Object</span>.getOwnPropertyDescriptor(person, <span class="string">"age"</span>); <span class="comment">// 数据属性</span></span><br><span class="line"><span class="keyword">var</span> descriptor3 = <span class="built_in">Object</span>.getOwnPropertyDescriptor(person, <span class="string">"ability"</span>); <span class="comment">//访问器属性</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(descriptor1);<span class="comment">//Object &#123;get: , set: , enumerable: true, configurable: true&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(descriptor2);<span class="comment">//Object &#123;value: 21, writable: true, enumerable: true, configurable: true&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(descriptor3);<span class="comment">//Object &#123;get: , set: , enumerable: false, configurable: false&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * descriptor1 和 descriptor3 都是访问器属性的描述符，如果直接对象中定义setter和getter，enmuerable和configurable默认为true</span></span><br><span class="line"><span class="comment"> * 如果是用Object.defineProperty()定义的属性，enmuerable和configurable默认为false，因为是新创建的对象属性</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>定义多个属性用<code>Object.defineProperties()</code> ;  获取属性描述符：<code>Object.getOwnPropertyDescriptor()</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 利用Object.defineProperty() 创建一个新的属性时，</span></span><br><span class="line"><span class="comment"> * 如果不指定，configurable、writable、enumerable默认都为false；value不指定默认是undefined</span></span><br><span class="line"><span class="comment"> * 利用Object.defineProperty()修改已定义的属性特性时，无此限制</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">obj.age = <span class="number">18</span></span><br><span class="line"><span class="comment">// name 为新创建的对象属性</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">'name'</span>,&#123;</span><br><span class="line">    value:<span class="string">'stanny'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">'age'</span>,&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * configurable 一旦定义了false（表示不能从对象中删除属性），</span></span><br><span class="line"><span class="comment">     * 就无法再修改回来，后续如果再修改除writable和value的值都会导致错误</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    configurable:<span class="literal">false</span>,</span><br><span class="line">    value:<span class="string">'stanny'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="built_in">console</span>.log(obj.age)</span><br><span class="line">obj.name=<span class="string">"xiaoqian-Guo"</span><span class="comment">//修改无效。</span></span><br><span class="line">obj.age=<span class="number">20</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)<span class="comment">// stanny </span></span><br><span class="line"><span class="built_in">console</span>.log(obj.age)<span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Can-a-1-amp-amp-a-2-amp-amp-a-3-ever-evaluate-to-true"><a href="#Can-a-1-amp-amp-a-2-amp-amp-a-3-ever-evaluate-to-true" class="headerlink" title="Can (a===1&amp;&amp;a===2&amp;&amp;a===3) ever evaluate to true?"></a>Can (a===1&amp;&amp;a===2&amp;&amp;a===3) ever evaluate to true?</h2><p><a href="https://segmentfault.com/a/1190000012921114" target="_blank" rel="noopener">参考1</a></p>
+<p><a href="https://stackoverflow.com/questions/48270127/can-a-1-a-2-a-3-ever-evaluate-to-true?utm_medium=organic&amp;utm_source=google_rich_qa&amp;utm_campaign=google_rich_qa" target="_blank" rel="noopener">参考2</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _a =<span class="number">0</span>;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>,<span class="string">'a'</span>,&#123;</span><br><span class="line">  get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ++_a;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 每次取得a的值，都是从get方法获取，依次递增</span></span><br></pre></td></tr></table></figure>
+<h2 id="ES6-class-amp-import"><a href="#ES6-class-amp-import" class="headerlink" title="ES6 class &amp; import"></a>ES6 class &amp; import</h2>
       
     </div>
     
@@ -395,6 +479,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/js-实现常用数据结构与算法.html" rel="prev" title="js 实现常用数据结构">
+                js 实现常用数据结构 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -475,7 +563,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -488,7 +576,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -521,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面试题"><span class="nav-number">1.</span> <span class="nav-text">面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面试题"><span class="nav-number">1.</span> <span class="nav-text">面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol"><span class="nav-number">2.1.</span> <span class="nav-text">Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-defineProperty"><span class="nav-number">2.2.</span> <span class="nav-text">Object.defineProperty()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Can-a-1-amp-amp-a-2-amp-amp-a-3-ever-evaluate-to-true"><span class="nav-number">2.3.</span> <span class="nav-text">Can (a===1&amp;&amp;a===2&amp;&amp;a===3) ever evaluate to true?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-class-amp-import"><span class="nav-number">2.4.</span> <span class="nav-text">ES6 class &amp; import</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -252,6 +252,403 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/递归回溯.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/递归回溯.html" itemprop="url">前端模块化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T10:07:24+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://segmentfault.com/a/1190000006121957" target="_blank" rel="noopener">参考1</a></p>
+<h1 id="经典八皇后问题"><a href="#经典八皇后问题" class="headerlink" title="经典八皇后问题"></a>经典八皇后问题</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 递归回溯解法 </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check2</span>(<span class="params">arr, n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">      <span class="comment">// 每次只需一层循环比较a[i]与a[n]即可，保证a[n](新加进来的值)不与其他其它皇后冲突即可。</span></span><br><span class="line">        <span class="keyword">if</span>((<span class="built_in">Math</span>.abs(arr[i] - arr[n]) == n - i) || (arr[i] == arr[n])) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [], n = <span class="number">4</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">backtrack</span>(<span class="params">k</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(k &gt; n) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(arr);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>;i &lt;= n; i++) &#123;</span><br><span class="line">            arr[k<span class="number">-1</span>] = i;</span><br><span class="line">          	<span class="comment">// check 成功则继续递归求解下一个值，check 失败不再递归求解下一个值</span></span><br><span class="line">            <span class="keyword">if</span>(check2(arr, k<span class="number">-1</span>)) &#123;</span><br><span class="line">                backtrack(k + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">backtrack(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//[ 2, 4, 1, 3 ]</span></span><br><span class="line"><span class="comment">//[ 3, 1, 4, 2 ]</span></span><br></pre></td></tr></table></figure>
+<h1 id="应用：递归回溯求解所有可能"><a href="#应用：递归回溯求解所有可能" class="headerlink" title="应用：递归回溯求解所有可能"></a>应用：递归回溯求解所有可能</h1><p>想象递归数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传入字符串，'?'可以为0或者1，求解所有可能</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">backtrack</span>(<span class="params">str, k</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (k &gt;= str.length) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(str);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> arr = str.split(<span class="string">""</span>);</span><br><span class="line">    <span class="keyword">if</span> (arr[k] == <span class="string">"?"</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt;= <span class="number">1</span>; j++) &#123;</span><br><span class="line">        arr[k] = j;</span><br><span class="line">         str = arr.join(<span class="string">""</span>);</span><br><span class="line">        backtrack(str, k + <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下为对比的错误方法：因为这种方法直接传的是当前已被修改的arr，回溯时后面的值已经被修改过了，而第一种方法 每次递归都会对arr重新赋值，递归深入修改的arr值不会影响到之前arr的值，并非直接在str上操作，两者区别发人深思，至今迷迷糊糊；简而言之，方法二的arr被共用了，方法一没有。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法2 优化1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">backtrack</span>(<span class="params">arr, curPoint</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// var arr = arr1.concat() 引入参数副本，每次递归不再共享操作参数数组</span></span><br><span class="line">  <span class="keyword">var</span> len = arr.length;</span><br><span class="line">  <span class="keyword">if</span> (curPoint &gt;= len) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr[curPoint] == <span class="string">"?"</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt;= <span class="number">1</span>; j++) &#123;</span><br><span class="line">        arr[curPoint] = j;</span><br><span class="line">        <span class="comment">// console.log(arr)</span></span><br><span class="line">        backtrack(arr, curPoint + <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法2 优化2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">backtrack</span>(<span class="params">arr, curPoint</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> len = arr.length;</span><br><span class="line">  <span class="keyword">if</span> (curPoint &gt;= len) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr[curPoint] == <span class="string">"?"</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt;= <span class="number">1</span>; j++) &#123;</span><br><span class="line">        arr[curPoint] = j;</span><br><span class="line">        <span class="comment">// console.log(arr)</span></span><br><span class="line">        backtrack(arr, curPoint + <span class="number">1</span>);</span><br><span class="line">        arr[curPoint] = <span class="string">"?"</span>; <span class="comment">//每次递归深入修改后面的值后，为了不影响前面的回溯操作，递归调用后再改回去</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/前端模块化.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/前端模块化.html" itemprop="url">前端模块化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T10:07:24+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前端模块化"><a href="#前端模块化" class="headerlink" title="前端模块化"></a>前端模块化</h1><p><a href="https://www.cnblogs.com/qianshui/p/5216580.html" target="_blank" rel="noopener">参考1</a><br><a href="https://www.cnblogs.com/futai/p/5258349.html" target="_blank" rel="noopener">参考2</a></p>
+<p>模块化的思想可以让我们更方便的使用模块，使用别人封装好的代码；并且可以更好的管理和组织代码</p>
+<h4 id="common-JS"><a href="#common-JS" class="headerlink" title="common JS"></a>common JS</h4><ol>
+<li>每个单独的模块都是都是一个单独的作用域（闭包），避免了全局命名冲突。</li>
+<li>加载模块 <code>require</code>  输出模块用<code>module.exports</code> </li>
+<li>可以顺畅连接各个模块，实现彼此之间的依赖关系。</li>
+<li>在NodeJs里使用</li>
+</ol>
+<h4 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h4><ul>
+<li>Common JS是同步加载模块，放到浏览器中执行会遇到加载速度慢等一系列的问题</li>
+<li>AMD就是 异步模块定义，是require JS对模块定义的规范产出 ，它可以实现异步模块加载，并且会提前加载</li>
+</ul>
+<h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><ul>
+<li>通用模块定义，是SeaJS对模块定义的规范产出。</li>
+<li>预先下载，延迟执行</li>
+<li>为什么延迟执行</li>
+</ul>
+<h1 id="AMD、CMD异同"><a href="#AMD、CMD异同" class="headerlink" title="AMD、CMD异同"></a>AMD、CMD异同</h1><h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><p>AMD 和 CMD 最明显的区别就是在模块定义时对依赖的处理不同</p>
+<ol>
+<li>AMD 推崇依赖前置，在定义模块的时候就会声明其依赖的模块，提前加载。</li>
+<li>CMD 推崇依赖就近，只有在用到某个模块的时候再去require。</li>
+</ol>
+<h3 id="相同"><a href="#相同" class="headerlink" title="相同"></a>相同</h3><p>//TODO</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/Vue-js-学习心得.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stanny">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="腹有诗书气自华">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/Vue-js-学习心得.html" itemprop="url">Vue.js 学习心得 </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T08:44:19+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="实习面试回答Vue学习心得"><a href="#实习面试回答Vue学习心得" class="headerlink" title="实习面试回答Vue学习心得"></a>实习面试回答Vue学习心得</h1><h3 id="Vue是什么"><a href="#Vue是什么" class="headerlink" title="Vue是什么"></a>Vue是什么</h3><h3 id="特点及原理"><a href="#特点及原理" class="headerlink" title="特点及原理"></a>特点及原理</h3><h3 id="实现todo-list后心得"><a href="#实现todo-list后心得" class="headerlink" title="实现todo list后心得"></a>实现todo list后心得</h3><ol>
+<li><p>Vue是一套构建用户界面的渐进式框架，可以做从 简单到复杂的前端单页应用。（对渐进式框架的理解：循序渐进，提供了很多其他的附加功能，后期需要时可以引入第三方插件）</p>
+</li>
+<li><p>Vue最显著的两个特点是响应的数据绑定和组件化开发</p>
+<ul>
+<li>vue里有很多指令类似于<code>v-for</code> <code>v-bind</code> <code>v-model</code> <code>v-if</code> ,利用这些可以很方便地实现一些效果，并且只需要关注视图层，比如说对input标签用<code>v-model</code> 可以轻松实现数据的双向绑定，视图层的数据改变，Vue实例中的数据也会改变；相应地，Vue实例数据改变了，视图层的数据也会改变过来。</li>
+<li>Vue实现双向绑定的原理是通过数据劫持结合发布者-订阅者模式来实现的。通过<code>Object.defineProperty()</code> 方法来劫持各个属性的<code>setter</code>和<code>getter</code> 方法。在数据发生改变时将消息发布给订阅者，然后再触发响应的回调。</li>
+<li>组件化开发思想是把一个单页应用拆分成各个模块，每个模块作为一个组件来开发，再 Vue 中注册好组件后，然后在父级应用中去应用这些组件，这样整个应用就用组件化开发的思想搭建起来了。</li>
+</ul>
+</li>
+<li><p>用 Vue 我自己做过一个Todo list的小例子，感触最深的就是 不需要写DOM操作了，用 Vue 只需要关注视图层和绑定的事件逻辑。如果用原生 js 去写的话，需要写大量的DOM 新增删除修改的代码。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/Flex-布局.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1708,7 +2105,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1721,7 +2118,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
