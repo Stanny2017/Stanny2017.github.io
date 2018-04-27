@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="彻底弄懂 HTTP 缓存机制参考链接 参考2 缓存在前端面试中经常被问到，必须彻底弄懂机制。 Http 缓存分为两类 强缓存  协商缓存   强缓存第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。  Expires 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，">
+<meta name="description" content="参考1 参考2  px相对长度单位，一个px对应屏幕一个像素点 em相对长度单位，相对父元素的 font-size ，一般情况下，font-size 默认渲染 16px  所以一般情况下，1em = 16px； 当然em的值是相对的，并不是固定的 rem相对长度单位。相对于根元素(即html元素)font-size计算值的倍数 123456789101112131415161718192021&amp;">
 <meta name="keywords" content="前端学习总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP 缓存机制">
-<meta property="og:url" content="http://yoursite.com/blog/HTTP-缓存机制.html">
+<meta property="og:title" content="长度单位px，em，rem">
+<meta property="og:url" content="http://yoursite.com/blog/长度单位px，em，rem.html">
 <meta property="og:site_name" content="腹有诗书气自华">
-<meta property="og:description" content="彻底弄懂 HTTP 缓存机制参考链接 参考2 缓存在前端面试中经常被问到，必须彻底弄懂机制。 Http 缓存分为两类 强缓存  协商缓存   强缓存第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。  Expires 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，">
+<meta property="og:description" content="参考1 参考2  px相对长度单位，一个px对应屏幕一个像素点 em相对长度单位，相对父元素的 font-size ，一般情况下，font-size 默认渲染 16px  所以一般情况下，1em = 16px； 当然em的值是相对的，并不是固定的 rem相对长度单位。相对于根元素(即html元素)font-size计算值的倍数 123456789101112131415161718192021&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png">
-<meta property="og:image" content="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210141453338-1263276228.png">
-<meta property="og:updated_time" content="2018-04-17T03:58:16.420Z">
+<meta property="og:updated_time" content="2018-04-23T10:03:40.778Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP 缓存机制">
-<meta name="twitter:description" content="彻底弄懂 HTTP 缓存机制参考链接 参考2 缓存在前端面试中经常被问到，必须彻底弄懂机制。 Http 缓存分为两类 强缓存  协商缓存   强缓存第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。  Expires 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，">
-<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png">
+<meta name="twitter:title" content="长度单位px，em，rem">
+<meta name="twitter:description" content="参考1 参考2  px相对长度单位，一个px对应屏幕一个像素点 em相对长度单位，相对父元素的 font-size ，一般情况下，font-size 默认渲染 16px  所以一般情况下，1em = 16px； 当然em的值是相对的，并不是固定的 rem相对长度单位。相对于根元素(即html元素)font-size计算值的倍数 123456789101112131415161718192021&amp;">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/blog/HTTP-缓存机制.html"/>
+  <link rel="canonical" href="http://yoursite.com/blog/长度单位px，em，rem.html"/>
 
 
 
 
 
-  <title>HTTP 缓存机制 | 腹有诗书气自华</title>
+  <title>长度单位px，em，rem | 腹有诗书气自华</title>
   
 
 
@@ -256,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/HTTP-缓存机制.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/长度单位px，em，rem.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stanny">
@@ -273,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTP 缓存机制</h1>
+          <h1 class="post-title" itemprop="name headline">长度单位px，em，rem</h1>
         
 
         <div class="post-meta">
@@ -285,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T11:57:13+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T10:15:39+08:00">
+                2018-04-22
               </time>
             
 
@@ -323,38 +320,15 @@
       
 
       
-        <h1 id="彻底弄懂-HTTP-缓存机制"><a href="#彻底弄懂-HTTP-缓存机制" class="headerlink" title="彻底弄懂 HTTP 缓存机制"></a>彻底弄懂 HTTP 缓存机制</h1><p><a href="https://www.cnblogs.com/chenqf/p/6386163.html" target="_blank" rel="noopener">参考链接</a></p>
-<p><a href="https://segmentfault.com/a/1190000008956069" target="_blank" rel="noopener">参考2</a></p>
-<p>缓存在前端面试中经常被问到，必须彻底弄懂机制。</p>
-<h2 id="Http-缓存分为两类"><a href="#Http-缓存分为两类" class="headerlink" title="Http 缓存分为两类"></a>Http 缓存分为两类</h2><ol>
-<li><p>强缓存</p>
-</li>
-<li><p>协商缓存</p>
-</li>
-</ol>
-<h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><p>第一次请求（还没有缓存的时候），服务器会将数据和缓存规则一起返回，客户端进行缓存。两个字段标明缓存失效规则。</p>
-<ol>
-<li><code>Expires</code> 到期时间（服务端时间）http1.0时代用这个，现在浏览器均默认http1.1，并且由于客户端时间和服务端时间可能存在误差，http1.1的版本使用<code>Cache-Control</code>替代。</li>
-<li><code>Cache-Control</code> 相对时间，max-age=xxx（单位： 秒）；在指定时间内，直接使用缓存资源。</li>
-</ol>
-<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><p>需要和服务器进行协商对比判断是否可以使用缓存。<br>第一次请求数据时，服务器会将缓存标识和数据一起返回，客户端将两者进行缓存备份。再次请求时，客户端将缓存标识一并发送，服务端根据缓存标识判断客户端是否可以直接使用缓存，判断成功，返回304状态码。</p>
-<ol>
-<li><code>Last-Modified</code>  （服务器返回首部字段）浏览器首次请求，服务器在响应请求时，告诉浏览器资源最后被修改的时间</li>
-<li><code>Last-Modified-Since</code> （客户端发送的首部字段）浏览器再次请求， 该字段保存的就是首次请求服务器返回的 <code>Last-Modified</code> 值，服务器拿到该值后进行对比，若值未变则返回304状态码，若该值小于服务器端的值，说明资源已被更新，服务器返回新的资源，返回成功状态码200OK；</li>
-<li><code>Etag</code> 第一次请求时，服务器返回的资源唯一标识。</li>
-<li><code>If-None-Match</code>  再次请求服务器，客户端将缓存的资源唯一标识以这个首部字段进行发送，客户端拿到这个值进行对比，若一样，则返回304，通知浏览器可以直接使用浏览器的缓存；若不一样，说明资源有改动，服务器响应新的资源。</li>
-</ol>
-<h4 id="浏览器首次请求"><a href="#浏览器首次请求" class="headerlink" title="浏览器首次请求"></a>浏览器首次请求</h4><p><img src="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210142134291-1976923079.png" alt="image"></p>
-<h4 id="浏览器再次请求"><a href="#浏览器再次请求" class="headerlink" title="浏览器再次请求"></a>浏览器再次请求</h4><p><img src="https://images2015.cnblogs.com/blog/632130/201702/632130-20170210141453338-1263276228.png" alt="image"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>第一次请求缓存资源后（也有可能不缓存 如果第一次请求服务器返回的 <code>Cache-Control</code> 值为<code>no-store</code> 则所有的资源都不会被缓存），浏览器再次请求时，先判断缓存资源是否过期，如果没有过期则直接取得缓存资源，不用再请求服务器。</li>
-<li>若过期，则进行协商缓存（缓存资源若没有被修改则仍然有效），服务器根据客户端请求发送的资源唯一标识符（<code>Last-Modified-Since</code>和<code>If-None-Match</code>）和服务器端的值（<code>Last-Modified</code>和<code>Etag</code>）进行对比，对比成功则返回304，告知服务器端可以直接使用浏览器端缓存资源。</li>
-</ol>
-<h2 id="附：HTTP状态码"><a href="#附：HTTP状态码" class="headerlink" title="附：HTTP状态码"></a>附：HTTP状态码</h2><p>1XX：服务器收到请求，请求i进行中</p>
-<p>2XX：请求成功，200 OK</p>
-<p>3XX：重定向，需要进一步的操作以完成请求。301 永久重定向；302 临时重定向；304 not modified</p>
-<p>4XX：客户端错误，401 Unauthorized（未授权）403 Forbidden（禁止访问） 404 not found（资源未找到）</p>
-<p>5XX：服务器错误，500 Internal Server Error（服务器内部错误，无法完成请求）； 502 Bad Gateway（网关错误）；  503 Service Unavailable（服务器临时宕机）；505 HTTP Version not supported（服务器不支持请求的 http 版本）</p>
+        <ul>
+<li><a href="https://blog.csdn.net/zhs45656/article/details/52101109" target="_blank" rel="noopener">参考1</a></li>
+<li><a href="https://www.w3cplus.com/css/px-to-em" target="_blank" rel="noopener">参考2</a></li>
+</ul>
+<h1 id="px"><a href="#px" class="headerlink" title="px"></a>px</h1><p>相对长度单位，一个px对应屏幕一个像素点</p>
+<h1 id="em"><a href="#em" class="headerlink" title="em"></a>em</h1><p>相对长度单位，相对父元素的 font-size ，一般情况下，font-size 默认渲染 16px </p>
+<p>所以一般情况下，1em = 16px； 当然em的值是相对的，并不是固定的</p>
+<h1 id="rem"><a href="#rem" class="headerlink" title="rem"></a>rem</h1><p>相对长度单位。相对于根元素(即html元素)font-size计算值的倍数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>rem_CSS参考手册_web前端开发参考手册系列<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">content</span>=<span class="string">"Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">html,</span></span><br><span class="line"><span class="undefined">h1 &#123;</span></span><br><span class="line"><span class="undefined">	font-size: 12px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined">p &#123;</span></span><br><span class="line"><span class="undefined">	font-size: 2rem;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>下面的文字将是html定义的字体大小的2倍：<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>我是html定义的12px的2倍，字体大小为24px<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -385,8 +359,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/js实现斐波那契取第n个值方法优化.html" rel="next" title="js实现斐波那契取第n个值方法优化">
-                <i class="fa fa-chevron-left"></i> js实现斐波那契取第n个值方法优化
+              <a href="/blog/正则表达式.html" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
               </a>
             
           </div>
@@ -395,8 +369,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/前端面试题资料集锦.html" rel="prev" title="前端面试题资料集锦">
-                前端面试题资料集锦 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/css预处理器.html" rel="prev" title="css预处理器">
+                css预处理器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -524,7 +498,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#彻底弄懂-HTTP-缓存机制"><span class="nav-number">1.</span> <span class="nav-text">彻底弄懂 HTTP 缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Http-缓存分为两类"><span class="nav-number">1.1.</span> <span class="nav-text">Http 缓存分为两类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强缓存"><span class="nav-number">1.1.1.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协商缓存"><span class="nav-number">1.1.2.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器首次请求"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">浏览器首次请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器再次请求"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">浏览器再次请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附：HTTP状态码"><span class="nav-number">1.3.</span> <span class="nav-text">附：HTTP状态码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#px"><span class="nav-number">1.</span> <span class="nav-text">px</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#em"><span class="nav-number">2.</span> <span class="nav-text">em</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rem"><span class="nav-number">3.</span> <span class="nav-text">rem</span></a></li></ol></div>
             
 
           </div>
