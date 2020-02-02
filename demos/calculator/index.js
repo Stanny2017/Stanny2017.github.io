@@ -1,58 +1,101 @@
 
-const buttons = document.getElementsByClassName('calc-button');
+const screen = document.querySelector('.screen')
+let screenResult = '0';
+let prevOperate = null;
+let operateResult = 0;
 
-for (const button of buttons) {
-    button.addEventListener('click', function (e) {
-        const val = e.target.innerText;
-        console.log(val);
+init();
 
-        const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        const operates = ['+', '−', '×', '÷'];
-        let result = document.querySelector('.screen').innerText;
-        if (result === '0') result = '';
-
-        if (numbers.includes(val) || operates.includes(val)) {
-            result += val;
-            document.querySelector('.screen').innerText = result;
-        }
-
-        if (val === '=') {
-            console.log(result)
-            document.querySelector('.screen').innerText = getResult(result);
-        }
-
-        if (val === 'C') {
-            document.querySelector('.screen').innerText = '0';
-        }
-
-        if (val === '←') {
-            result = result.slice(0, result.length - 1);
-            if (result === '') result = 0;
-
-            document.querySelector('.screen').innerText = result;
-        }
-    });
+function init() {
+    // addEventListener 绑定 父 div 事件代理 
+    document
+        .querySelector('.calc-buttons')
+        .addEventListener('click', function (event) {
+            const clickedButton = event.target;  // event.currentTarget is the .calc-buttons section
+            handleButtonClick(clickedButton.innerText);
+        });
 }
 
-
-function getResult(operates) {
-
-    let result = '';
-    let operatesNum;
-
-    if (operates.includes('+')) {
-        operatesNum = operates.split('+');
-        result = parseInt(operatesNum[0]) + parseInt(operatesNum[1]);
-    } else if (operates.includes('-')) {
-        operatesNum = operates.split('+');
-        result = parseInt(operatesNum[0]) - parseInt(operatesNum[1]);
-    } else if (operates.includes('×')) {
-        operatesNum = operates.split('×');
-        result = parseInt(operatesNum[0]) * parseInt(operatesNum[1]);
-    } else if (operates.includes('÷')) {
-        operatesNum = operates.split('÷');
-        result = parseInt(operatesNum[0]) / parseInt(operatesNum[1]);
+function handleButtonClick(value) {
+    if (isNaN(value)) {
+        // not a number
+        handleSymbol(value);
+    } else {
+        // is number
+        handleNumber(value);
     }
 
-    return result;
+    screen.innerText = screenResult;
+}
+
+function handleSymbol(symbol) {
+
+    switch (symbol) {
+        case 'C':
+            screenResult = '0';
+            break;
+        case '←':
+            handleBack();
+            break;
+        case '=':
+            flushOperation();
+            break;
+        case '+':
+        case '−':
+        case '×':
+        case '÷':
+            handleOperate(symbol);
+            break;
+        default:
+        // do nothing
+    }
+}
+
+function handleOperate(symbol) {
+    operateResult = parseInt(screen.innerText);
+    prevOperate = symbol;
+    screenResult = '0';
+}
+
+function flushOperation() {
+    if (!prevOperate) return;
+
+    const currNumber = parseInt(screen.innerText);
+    switch (prevOperate) {
+        case '+':
+            operateResult += currNumber;
+            break;
+        case '−':
+            operateResult -= currNumber;
+            break;
+        case '×':
+            operateResult *= currNumber;
+            break;
+        case '÷':
+            operateResult /= currNumber;
+            break;
+        default:
+        //do nothing
+    }
+
+    prevOperate = null;
+    screenResult = operateResult.toString();
+}
+
+function handleBack() {
+    const v = screen.innerText;
+    if (v.length === 1) {
+        screenResult = '0';
+    } else {
+        screenResult = v.substring(0, v.length - 1);
+    }
+}
+
+function handleNumber(stringNumber) {
+
+    if (screenResult === '0') {
+        screenResult = stringNumber;
+    } else {
+        screenResult += stringNumber;
+    }
 }
